@@ -1,0 +1,19 @@
+{
+    "name": "storestack-plugin",
+    "version": "",
+    "author": "",
+    "description": "",
+    "keywords": [],
+    "license": "ISC",
+    "main": "index.js",
+    "type": "module",
+    "devDependencies": {
+        "tailwindcss": "^4.3.3",
+        "@tailwindcss/cli": "^4.3.3"
+    },
+    "scripts": {
+        "tailwind-dev": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css --watch",
+        "tailwind-build": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css",
+        "upgrade-dependencies": "npx npm-check-updates -u && npm install"
+    }
+}
