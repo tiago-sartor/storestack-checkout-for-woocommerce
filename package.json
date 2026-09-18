@@ -8,12 +8,17 @@
     "main": "index.js",
     "type": "module",
     "devDependencies": {
+        "@tailwindcss/cli": "^4.3.3",
+        "esbuild": "^0.28.2",
         "tailwindcss": "^4.3.3",
-        "@tailwindcss/cli": "^4.3.3"
+        "typescript": "^7.0.2"
     },
     "scripts": {
         "tailwind-dev": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css --watch",
         "tailwind-build": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css",
+        "build:js": "esbuild src/ts/index.ts --bundle --minify --outfile=assets/js/frontend.js --target=es2022 && esbuild src/ts/brazilian-fields-validation.ts --bundle --minify --outfile=assets/js/brazilian-fields-validation.js --target=es2022",
+        "build": "npm run tailwind-build && npm run build:js",
+        "typecheck": "tsc --noEmit",
         "upgrade-dependencies": "npx npm-check-updates -u && npm install"
     }
 }

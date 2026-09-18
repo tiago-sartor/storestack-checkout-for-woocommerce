@@ -5,12 +5,6 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/checkout/thankyou.php.
  *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
  * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
  * @version 8.1.0
@@ -22,7 +16,7 @@ declare(strict_types=1);
 defined('ABSPATH') || exit;
 ?>
 
-<div class="woocommerce-order">
+<div class="woocommerce-order py-8 sm:py-12">
 
     <?php
     if ($order) :
@@ -32,35 +26,68 @@ defined('ABSPATH') || exit;
 
         <?php if ($order->has_status('failed')) : ?>
 
-            <p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed">
-                <?php esc_html_e('Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'woocommerce'); ?>
-            </p>
+            <div class="p-6 rounded-2xl border border-red-200 bg-red-50/70 max-w-2xl mx-auto text-center space-y-4">
+                <div class="size-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto">
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </div>
 
-            <p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed-actions">
-                <a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="button pay"><?php esc_html_e('Pay', 'woocommerce'); ?></a>
-                <?php if (is_user_logged_in()) : ?>
-                    <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="button pay"><?php esc_html_e('My account', 'woocommerce'); ?></a>
-                <?php endif; ?>
-            </p>
+                <h2 class="text-xl font-bold text-red-900">
+                    <?php esc_html_e('Order Failed', 'woocommerce'); ?>
+                </h2>
+
+                <p class="text-sm text-red-700 leading-relaxed">
+                    <?php esc_html_e('Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'woocommerce'); ?>
+                </p>
+
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="w-full sm:w-auto px-6 py-3 rounded-lg font-semibold text-sm text-white bg-red-700 hover:bg-red-800 transition-colors">
+                        <?php esc_html_e('Pay', 'woocommerce'); ?>
+                    </a>
+                    <?php if (is_user_logged_in()) : ?>
+                        <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="w-full sm:w-auto px-6 py-3 rounded-lg font-medium text-sm text-neutral-700 bg-white border border-neutral-300 hover:bg-neutral-50 transition-colors">
+                            <?php esc_html_e('My account', 'woocommerce'); ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
 
             <?php do_action('woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id()); ?>
             <?php do_action('woocommerce_thankyou', $order->get_id()); ?>
 
         <?php else : ?>
 
-            <div class="relative lg:grid lg:grid-cols-[3fr_2fr] lg:items-start lg:gap-[10%]">
+            <div class="relative grid grid-cols-1 lg:grid-cols-12 lg:items-start lg:gap-10 xl:gap-14">
 
-                <div>
-                    <div class="flex items-center justify-start gap-3 mt-10 mb-8">
-                        <span>
-                            <svg class="size-16" viewBox="0 -960 960 960" fill="currentColor">
-                                <path d="m422.46-323.69 255.85-255.85L650-607.85 422.46-380.31l-114-114L280.15-466l142.31 142.31ZM480.13-120q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120Zm-.13-40q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                <!-- Left Column: Confirmation & Customer Details -->
+                <div class="lg:col-span-7 space-y-6">
+
+                    <!-- Header with Checkmark -->
+                    <div class="flex items-start gap-4">
+                        <div class="size-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
-                        </span>
-                        <div class="flex flex-col items-start justify-center gap-1">
-                            <span>Pedido nº <?php echo esc_html($order->get_order_number()); ?></span>
-                            <h2 class="text-2xl font-bold">Obrigado, <?php echo esc_html($order->get_billing_first_name()); ?>!</h2>
                         </div>
+                        <div>
+                            <span class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+                                <?php printf(esc_html__('Order #%s', 'woocommerce'), esc_html($order->get_order_number())); ?>
+                            </span>
+                            <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight mt-0.5">
+                                <?php printf(esc_html__('Thank you, %s!', 'woocommerce'), esc_html($order->get_billing_first_name())); ?>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <!-- Order Confirmation Message Card -->
+                    <div class="p-5 rounded-xl border border-neutral-200/90 bg-white shadow-2xs space-y-1">
+                        <h3 class="text-sm font-semibold text-neutral-900">
+                            <?php echo esc_html__('Your order is confirmed', 'woocommerce'); ?>
+                        </h3>
+                        <p class="text-xs text-neutral-600 leading-relaxed">
+                            <?php printf(esc_html__('We\'ve accepted your order, and we\'ll send updates to %s.', 'woocommerce'), '<strong class="font-medium text-neutral-900">' . esc_html($order->get_billing_email()) . '</strong>'); ?>
+                        </p>
                     </div>
 
                     <?php do_action('woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id()); ?>
@@ -70,24 +97,39 @@ defined('ABSPATH') || exit;
                     do_action('woocommerce_thankyou', $order->get_id());
                     ?>
 
-                    <?php
-                    // We make sure the order belongs to the user. This will also be true if the user is a guest, and the order belongs to a guest (userID === 0).
-                    if ($order->get_user_id() === get_current_user_id()) :
-                    ?>
-                        <div class="my-8 text-sm">
-                            <p class="mb-4">Verifique as informações abaixo com atenção. Se precisar corrigir algum dado, por favor comunique-nos o mais breve possível.</p>
-                            <div class="border border-neutral-300 divide-y divide-neutral-300 rounded-md">
-                                <div class="flex items-start justify-start gap-6 p-4">
-                                    <span class="min-w-20 font-medium">E-mail</span>
-                                    <span><?php echo esc_html($order->get_billing_email()); ?></span>
+                    <?php if ($order->get_user_id() === get_current_user_id()) : ?>
+                        <!-- Customer Information Card (Grid) -->
+                        <div class="p-6 rounded-xl border border-neutral-200/90 bg-white shadow-2xs space-y-6">
+                            <h3 class="text-base font-semibold text-neutral-900">
+                                <?php echo esc_html__('Order details', 'woocommerce'); ?>
+                            </h3>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs sm:text-sm">
+                                <!-- Contact Info -->
+                                <div>
+                                    <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
+                                        <?php echo esc_html__('Contact information', 'woocommerce'); ?>
+                                    </h4>
+                                    <p class="text-neutral-900"><?php echo esc_html($order->get_billing_email()); ?></p>
+                                    <?php if ($phone = $order->get_billing_phone()) : ?>
+                                        <p class="text-neutral-600 mt-0.5"><?php echo esc_html($phone); ?></p>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="flex items-start justify-start gap-6 p-4">
-                                    <span class="min-w-20 font-medium">Celular</span>
-                                    <span><?php echo esc_html($order->get_billing_phone()); ?></span>
+
+                                <!-- Payment Method -->
+                                <div>
+                                    <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
+                                        <?php echo esc_html__('Payment method', 'woocommerce'); ?>
+                                    </h4>
+                                    <p class="text-neutral-900 font-medium"><?php echo wp_kses_post($order->get_payment_method_title()); ?></p>
                                 </div>
-                                <div class="flex items-start justify-start gap-6 p-4">
-                                    <span class="min-w-20 font-medium">Entrega</span>
-                                    <address class="not-italic!">
+
+                                <!-- Shipping Address -->
+                                <div>
+                                    <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
+                                        <?php echo esc_html__('Shipping address', 'woocommerce'); ?>
+                                    </h4>
+                                    <address class="not-italic text-neutral-800 leading-relaxed">
                                         <?php
                                         $show_shipping = !wc_ship_to_billing_address_only() && $order->needs_shipping_address();
                                         if ($show_shipping) :
@@ -100,39 +142,58 @@ defined('ABSPATH') || exit;
                                         ?>
                                     </address>
                                 </div>
+
+                                <!-- Billing Address -->
+                                <div>
+                                    <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
+                                        <?php echo esc_html__('Billing address', 'woocommerce'); ?>
+                                    </h4>
+                                    <address class="not-italic text-neutral-800 leading-relaxed">
+                                        <?php echo wp_kses_post($order->get_formatted_billing_address(esc_html__('N/A', 'woocommerce'))); ?>
+                                    </address>
+                                </div>
+
                                 <?php if ($customer_note = $order->get_customer_note()) : ?>
-                                    <div class="flex items-start justify-start gap-6 p-4">
-                                        <span class="min-w-20 font-medium">Observação</span>
-                                        <span><?php echo wp_kses_post($customer_note); ?></span>
+                                    <div class="sm:col-span-2 pt-2 border-t border-neutral-100">
+                                        <h4 class="font-medium text-neutral-500 mb-1 uppercase text-2xs tracking-wider">
+                                            <?php echo esc_html__('Order notes', 'woocommerce'); ?>
+                                        </h4>
+                                        <p class="text-neutral-800 italic"><?php echo wp_kses_post($customer_note); ?></p>
                                     </div>
                                 <?php endif; ?>
-                                <div class="flex items-start justify-start gap-6 p-4">
-                                    <span class="min-w-20 font-medium">Pagamento</span>
-                                    <span><?php echo wp_kses_post($order->get_payment_method_title()); ?></span>
-                                </div>
                             </div>
                         </div>
                     <?php endif; ?>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-8 mt-8">
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
                         <a
-                            class="text-sm hover:underline hover:underline-offset-6"
-                            href="<?php echo home_url(); ?>"
+                            class="text-sm font-medium text-neutral-600 hover:text-neutral-900 flex items-center gap-1.5 transition-colors"
+                            href="<?php echo esc_url(home_url()); ?>"
                             role="button">
-                            <span aria-hidden="true">← </span>
-                            Retornar para a Loja
+                            <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                            <span><?php echo esc_html__('Continue shopping', 'woocommerce'); ?></span>
                         </a>
-                        <a
-                            class="flex items-center justify-center p-4 rounded-sm text-sm font-semibold text-white bg-neutral-900 hover:bg-neutral-700 focus:outline-none"
-                            href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>"
-                            role="button">
-                            Acessar minha conta
-                        </a>
+
+                        <?php if (is_user_logged_in()) : ?>
+                            <a
+                                class="w-full sm:w-auto px-6 py-3.5 rounded-lg text-sm font-semibold text-white bg-neutral-900 hover:bg-neutral-800 active:bg-black transition-colors shadow-sm text-center"
+                                href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>"
+                                role="button">
+                                <?php echo esc_html__('View account', 'woocommerce'); ?>
+                            </a>
+                        <?php endif; ?>
                     </div>
+
                 </div>
 
-                <div>
-                    <?php wc_get_template('order/order-details.php', ['order' => $order]); ?>
+                <!-- Right Column: Order Details / Items Summary -->
+                <div class="lg:col-span-5 mt-8 lg:mt-0">
+                    <div class="lg:sticky lg:top-8 bg-neutral-50 border border-neutral-200/90 rounded-2xl p-5 sm:p-7 shadow-xs">
+                        <?php wc_get_template('order/order-details.php', ['order' => $order]); ?>
+                    </div>
                 </div>
 
             </div>

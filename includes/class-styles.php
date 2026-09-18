@@ -49,8 +49,8 @@ class Styles
             'header_text_color'   => '#ffffff',
             'footer_bg_color'     => '#fafafa',
             'footer_text_color'   => '#737373',
-            'button_radius'       => '4px',
-            'input_radius'        => '4px',
+            'button_radius'       => '6px',
+            'input_radius'        => '6px',
             'custom_css'          => '',
         ];
 

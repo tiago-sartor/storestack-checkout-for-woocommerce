@@ -16,7 +16,10 @@ class ThankYou
 
     public function locate_template($template, $template_name, $template_path) {
         if ($template_name === 'checkout/thankyou.php') {
-            $custom_template = SSCFW_PLUGIN_PATH . 'templates/checkout/thankyou.php';
+            $custom_template = SSCFW_PLUGIN_PATH . 'templates/woocommerce/checkout/thankyou.php';
+            if (!file_exists($custom_template)) {
+                $custom_template = SSCFW_PLUGIN_PATH . 'templates/checkout/thankyou.php';
+            }
             if (file_exists($custom_template)) {
                 return $custom_template;
             }

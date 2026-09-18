@@ -4,38 +4,42 @@ declare(strict_types=1);
 defined('ABSPATH') || exit;
 ?>
 
-
-<div x-data="{open: false}" class="my-8">
+<div class="my-6">
 
     <?php do_action('woocommerce_before_order_notes', $checkout); ?>
 
     <?php if (apply_filters('woocommerce_enable_order_notes_field', 'yes' === get_option('woocommerce_enable_order_comments', 'yes'))) : ?>
 
         <div>
-            <label for="order-notes" class="flex items-center justify-start gap-3 my-4 cursor-pointer">
-                <input x-model="open" id="order-notes" class="size-5 rounded-sm" type="checkbox" name="order-notes" value="" />
-                <span class="text-sm">Adicione uma observação ao seu pedido</span>
+            <label for="order-notes-toggle" class="inline-flex items-center gap-3 cursor-pointer select-none text-sm text-neutral-800 hover:text-neutral-950 transition-colors">
+                <input
+                    id="order-notes-toggle"
+                    class="peer size-4.5 rounded-md border-neutral-300 accent-neutral-900 cursor-pointer"
+                    type="checkbox"
+                    name="order-notes-toggle"
+                    value="" />
+                <span class="font-medium"><?php echo esc_html__('Add order notes or instructions', 'woocommerce'); ?></span>
             </label>
         </div>
 
-        <div x-cloak x-transition x-show="open" class="woocommerce-additional-fields__field-wrapper">
+        <!-- Hidden by default; revealed when the checkbox above is checked via CSS peer pattern -->
+        <div class="hidden peer-checked:block woocommerce-additional-fields__field-wrapper mt-3">
             <?php foreach ($checkout->get_checkout_fields('order') as $key => $field) : ?>
                 <?php
                 if ($key === 'order_comments') :
-                    $label = $field['label'] ?? '';
-                    $placeholder = $field['placeholder'] ?? '';
+                    $label = $field['label'] ?? __('Order notes', 'woocommerce');
+                    $placeholder = $field['placeholder'] ?? __('Notes about your order, e.g. special notes for delivery.', 'woocommerce');
                     $input_value = $checkout->get_value($key) ?? '';
                 ?>
                     <div
-                        x-init="if ($refs.<?php echo esc_attr($key); ?>.value !== '') open = true"
-                        class="relative mt-3" id="<?php echo esc_attr($key) . '_field'; ?>">
+                        class="relative"
+                        id="<?php echo esc_attr($key) . '_field'; ?>">
                         <label class="sr-only" for="<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></label>
                         <textarea
-                            x-ref="<?php echo esc_attr($key); ?>"
-                            class="w-full p-3 text-base border border-neutral-500 rounded-sm bg-white"
+                            class="w-full p-3.5 text-sm bg-white border border-neutral-300 rounded-lg placeholder-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition-all shadow-2xs resize-y"
                             name="<?php echo esc_attr($key); ?>"
                             id="<?php echo esc_attr($key); ?>"
-                            rows="2"
+                            rows="3"
                             placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_textarea($input_value); ?></textarea>
                     </div>
                 <?php else : ?>

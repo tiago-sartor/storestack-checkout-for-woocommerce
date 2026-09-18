@@ -22,7 +22,7 @@ include_once file_exists($filtered_header_template) ? $filtered_header_template 
 ?>
 
 
-<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<main class="size-full">
     <?php
     while (have_posts()) {
         the_post();

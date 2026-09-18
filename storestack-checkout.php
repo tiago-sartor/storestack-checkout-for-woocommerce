@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name:          StoreStack Checkout for WooCommerce
  * Plugin URI:           https://github.com/StoreStack/storestack-checkout-for-woocommerce

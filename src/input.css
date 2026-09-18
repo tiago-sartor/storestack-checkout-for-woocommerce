@@ -88,4 +88,138 @@
     .woocommerce-terms-and-conditions-wrapper a {
         @apply underline hover:text-neutral-500;
     }
+
+    /* Payment Method selected state */
+    .wc_payment_method:has(input[type="radio"]:checked) {
+        @apply border-neutral-900 bg-neutral-50/50;
+    }
+
+    /* Clean up default WooCommerce notice styles on checkout */
+    .woocommerce-error,
+    .woocommerce-info,
+    .woocommerce-message {
+        @apply my-4 p-4 rounded-lg text-sm border flex items-start gap-3;
+        list-style: none;
+    }
+
+    .woocommerce-error {
+        @apply bg-red-50 text-red-800 border-red-200;
+    }
+
+    .woocommerce-info {
+        @apply bg-blue-50 text-blue-800 border-blue-200;
+    }
+
+    .woocommerce-message {
+        @apply bg-emerald-50 text-emerald-800 border-emerald-200;
+    }
+
+    /* ── Floating Label Field ───────────────────────────────────────────────────
+     * Applied to the outer wrapper div of every text/select input.
+     * No JavaScript needed — uses :focus-within, :has(), and placeholder=" ".
+     * ────────────────────────────────────────────────────────────────────────── */
+    .form-floating-field {
+        @apply relative flex items-center h-12 px-3.5 bg-white border border-neutral-300 rounded-lg
+               focus-within:border-neutral-900 focus-within:ring-1 focus-within:ring-neutral-900
+               transition-all shadow-2xs;
+
+        /* The <label> floats to the top when the field is active */
+        & > label {
+            @apply absolute left-3.5 top-3.5 text-sm text-neutral-500
+                   pointer-events-none transition-all duration-150 ease-out select-none;
+        }
+
+        /* Float label up when input is focused */
+        &:focus-within > label {
+            @apply top-1.5 text-[11px] font-medium;
+        }
+
+        /* Float label up when input has a value (placeholder=" " trick) */
+        &:has(input:not(:placeholder-shown)) > label,
+        &:has(select) > label,
+        &:has(input:-webkit-autofill) > label {
+            @apply top-1.5 text-[11px] font-medium;
+        }
+
+        /* Push input text down when label is floating */
+        &:focus-within input,
+        &:has(input:not(:placeholder-shown)) input,
+        &:has(input:-webkit-autofill) input {
+            @apply pt-4;
+        }
+    }
+
+    /* ── Native <dialog> Login Modal ────────────────────────────────────────────
+     * Replaces the Alpine overlay + positioned div pattern.
+     * ────────────────────────────────────────────────────────────────────────── */
+    #checkout-login-dialog {
+        @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+               w-[calc(100%-2rem)] max-w-md bg-white rounded-2xl shadow-2xl p-6 border-0 m-0;
+
+        /* Animate in via CSS transition (dialog[open] is set natively) */
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.95);
+        transition: opacity 200ms ease-out, transform 200ms ease-out,
+                    overlay 200ms allow-discrete, display 200ms allow-discrete;
+
+        &[open] {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+
+            @starting-style {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+        }
+
+        &::backdrop {
+            background: rgb(0 0 0 / 0.4);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            transition: opacity 200ms ease-out,
+                        overlay 200ms allow-discrete,
+                        display 200ms allow-discrete;
+        }
+
+        &[open]::backdrop {
+            opacity: 1;
+
+            @starting-style {
+                opacity: 0;
+            }
+        }
+    }
+
+    /* ── Mobile Order Summary <details> accordion ───────────────────────────────
+     * The <summary> click opens/closes natively. On desktop we force it open.
+     * ────────────────────────────────────────────────────────────────────────── */
+    .checkout-order-summary-details {
+        /* Remove default marker */
+        & > summary {
+            list-style: none;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        /* Chevron rotation when open */
+        &[open] .summary-chevron {
+            @apply rotate-180;
+        }
+    }
+
+    /* On desktop, always show the order review panel regardless of open state */
+    @media (min-width: 1024px) {
+        .checkout-order-summary-details,
+        .checkout-order-summary-details[open] {
+            /* Force the content panel visible via CSS — the details element
+               controls mobile only. The summary bar is hidden via lg:hidden. */
+        }
+
+        .checkout-order-summary-details > .order-review-panel {
+            display: block !important;
+        }
+    }
 }
+

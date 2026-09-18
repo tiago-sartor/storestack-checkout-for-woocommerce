@@ -8,7 +8,7 @@ defined('ABSPATH') || exit;
 
 ?>
 
-<footer class="mt-30 bg-neutral-50">
+<footer class="bg-neutral-50">
 
     <div class="mx-auto max-w-1440px px-4 py-8 sm:px-6 lg:px-8">
 

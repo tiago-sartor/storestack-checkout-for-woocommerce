@@ -19,6 +19,11 @@ class Checkout
     public function __construct()
     {
         add_filter('template_include', [$this, 'override_checkout_template'], 9999);
+        add_filter('woocommerce_locate_template', [$this, 'override_checkout_template_parts'], 9999, 3);
+
+        // Disable product variation attributes in product titles on the checkout page.
+        add_filter('woocommerce_product_variation_title_include_attributes', '__return_false');
+
         add_action('wp_enqueue_scripts', [$this, 'checkout_enqueue_scripts'], 9999);
     }
 
@@ -43,7 +48,44 @@ class Checkout
             return $template;
         }
 
-        return SSCFW_PLUGIN_PATH . 'templates/checkout.php';
+        /**
+         * Filters the override template for the checkout page.
+         *
+         * @since 1.0.0
+         * 
+         * @param string $override_template The path to the override template.
+         * @param string $template The original template path.
+         */
+        $override_template = apply_filters('storestack_checkout_override_template', SSCFW_PLUGIN_PATH . 'templates/checkout.php', $template);
+
+        return file_exists($override_template) ? $override_template : $template;
+    }
+
+    public function override_checkout_template_parts(string $template, string $template_name, string $template_path): string
+    {
+        if (! $this->is_checkout_page() || 'woocommerce/' !== $template_path) {
+            return $template;
+        }
+
+        /**
+         * Filters the override template part for the checkout page.
+         *
+         * @since 1.0.0
+         * 
+         * @param string $override_template The path to the override template.
+         * @param string $template The original template path.
+         * @param string $template_name The name of the template.
+         * @param string $template_path The path to the template.
+         */
+        $override_template = apply_filters(
+            'storestack_checkout_override_template_part',
+            SSCFW_PLUGIN_PATH . 'templates/woocommerce/' . $template_name,
+            $template,
+            $template_name,
+            $template_path
+        );
+
+        return file_exists($override_template) ? $override_template : $template;
     }
 
     public function checkout_enqueue_scripts(): void
@@ -82,6 +124,26 @@ class Checkout
 
         // Enqueue our CSS styles
         wp_enqueue_style(self::STYLE_HANDLE, SSCFW_PLUGIN_URL . 'assets/css/frontend.css', [], SSCFW_PLUGIN_VERSION);
+
+        // Enqueue core checkout JS (dialog, coupon AJAX, Enter-key guard, mobile total sync).
+        wp_enqueue_script(
+            'storestack-checkout-frontend',
+            SSCFW_PLUGIN_URL . 'assets/js/frontend.js',
+            ['jquery'],
+            SSCFW_PLUGIN_VERSION,
+            true
+        );
+
+        // Conditionally enqueue Brazilian field validation script.
+        if (class_exists('Extra_Checkout_Fields_For_Brazil')) {
+            wp_enqueue_script(
+                'storestack-checkout-brazilian-fields',
+                SSCFW_PLUGIN_URL . 'assets/js/brazilian-fields-validation.js',
+                ['storestack-checkout-frontend'],
+                SSCFW_PLUGIN_VERSION,
+                true
+            );
+        }
 
         /** 
          * Fires after the checkout scripts are enqueued.
