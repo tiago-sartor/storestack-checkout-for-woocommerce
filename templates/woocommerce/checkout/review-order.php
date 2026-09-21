@@ -37,10 +37,10 @@ defined('ABSPATH') || exit;
 
                     <!-- Thumbnail with Quantity Badge -->
                     <div class="relative size-16 lg:size-20 shrink-0 rounded-lg border border-neutral-200 bg-white p-0.5 flex items-center justify-center">
-                        <div class="size-full overflow-clip rounded-md flex items-center justify-center [&>img]:size-full [&>img]:object-cover">
+                        <div class="size-full overflow-clip rounded-md flex items-center justify-center [&_img]:size-full [&_img]:object-cover">
                             <?php echo wp_kses_post($product_thumbnail); ?>
                         </div>
-                        <span class="absolute -top-2.5 -right-2.5 z-10 flex items-center justify-center size-5.5 px-1 text-xs font-semibold text-white rounded-full bg-neutral-800">
+                        <span class="absolute top-0 right-0 z-10 flex size-5.5 translate-x-11/25 -translate-y-11/25 items-center justify-center rounded-full bg-neutral-800 px-1 text-xs font-semibold text-white">
                             <?php echo esc_html($product_quantity); ?>
                         </span>
                     </div>

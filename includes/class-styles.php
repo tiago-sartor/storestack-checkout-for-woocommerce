@@ -163,8 +163,8 @@ class Styles
             background-color: var(--sscfw-primary-hover-color) !important;
         }
 
-        /* Form inputs and controls */
-        .woocommerce-checkout input[type="text"],
+        /* Form inputs and controls */        
+        /** .woocommerce-checkout input[type="text"],
         .woocommerce-checkout input[type="tel"],
         .woocommerce-checkout input[type="email"],
         .woocommerce-checkout select,
@@ -179,7 +179,7 @@ class Styles
         .woocommerce-checkout textarea:focus {
             border-color: var(--sscfw-accent-color);
             outline-color: var(--sscfw-accent-color);
-        }
+        } **/
 
         /* Links */
         .woocommerce-checkout a:not(.button),

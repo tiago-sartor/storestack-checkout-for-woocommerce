@@ -73,25 +73,13 @@
         }
     }
 
-    .price.order-review {
-        @apply mt-1.5 text-sm;
-
-        del {
-            @apply inline-block text-xs text-neutral-500 line-through;
-        }
-
-        ins {
-            @apply inline-block no-underline;
-        }
-    }
-
     .woocommerce-terms-and-conditions-wrapper a {
-        @apply underline hover:text-neutral-500;
+        @apply underline;
     }
 
     /* Payment Method selected state */
     .wc_payment_method:has(input[type="radio"]:checked) {
-        @apply border-neutral-900 bg-neutral-50/50;
+        @apply border-neutral-900 bg-neutral-50;
     }
 
     /* Clean up default WooCommerce notice styles on checkout */
@@ -118,26 +106,26 @@
      * Applied to the outer wrapper div of every text/select input.
      * No JavaScript needed — uses :focus-within, :has(), and placeholder=" ".
      * ────────────────────────────────────────────────────────────────────────── */
-    .form-floating-field {
-        @apply relative flex items-center h-12 px-3.5 bg-white border border-neutral-300 rounded-lg
-               focus-within:border-neutral-900 focus-within:ring-1 focus-within:ring-neutral-900
-               transition-all shadow-2xs;
+    .checkout-form-field {
+        @apply relative flex items-center h-12 px-3.5 bg-white border border-neutral-300
+            rounded-lg focus-within:border-neutral-900 focus-within:ring-1
+            focus-within:ring-neutral-900 transition-all;
 
         /* The <label> floats to the top when the field is active */
-        & > label {
-            @apply absolute left-3.5 top-3.5 text-sm text-neutral-500
-                   pointer-events-none transition-all duration-150 ease-out select-none;
+        & label {
+            @apply absolute left-3.5 top-3.5 text-sm text-neutral-500 pointer-events-none
+                transition-all duration-150 ease-out select-none;
         }
 
         /* Float label up when input is focused */
-        &:focus-within > label {
+        &:focus-within label {
             @apply top-1.5 text-[11px] font-medium;
         }
 
         /* Float label up when input has a value (placeholder=" " trick) */
-        &:has(input:not(:placeholder-shown)) > label,
-        &:has(select) > label,
-        &:has(input:-webkit-autofill) > label {
+        &:has(input:not(:placeholder-shown)) label,
+        &:has(select) label,
+        &:has(input:-webkit-autofill) label {
             @apply top-1.5 text-[11px] font-medium;
         }
 
@@ -147,20 +135,142 @@
         &:has(input:-webkit-autofill) input {
             @apply pt-4;
         }
+
+        & .woocommerce-input-wrapper,
+        & input {
+            @apply size-full bg-transparent text-sm text-neutral-900 transition-all focus:outline-none;
+        }
+
+        & select {
+            @apply absolute inset-0 size-full cursor-pointer appearance-none bg-transparent
+                px-3.5 pt-4 text-sm text-neutral-900 focus:outline-none;
+        }
     }
+
+    /* SELECT2 */
+    .woocommerce-checkout .select2-container {
+        @apply size-full! bg-transparent!;
+    }
+/*
+    .woocommerce-checkout .select2-container--open .select2-dropdown {
+        border-color: #16110e !important;
+        font-family: Inter, sans-serif;
+        overflow: hidden
+    }
+
+    .woocommerce-checkout .select2-container--open .select2-dropdown * {
+        font-family: Inter, sans-serif;
+    }
+
+    .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field,
+    .woocommerce-checkout .select2-selection {
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        box-shadow: none;
+        color: #16110e;
+        font-size: 16px;
+        line-height: 28px;
+        width: 100%
+    }
+
+    .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field:focus,
+    .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field:hover,
+    .woocommerce-checkout .select2-selection:focus,
+    .woocommerce-checkout .select2-selection:hover {
+        border-color: #16110e;
+        outline: unset
+    }
+
+    .woocommerce-checkout .select2-search__field {
+        -webkit-appearance: auto;
+        -moz-appearance: auto;
+        appearance: auto;
+        padding: 4px 16px
+    }
+
+    .woocommerce-checkout .select2-container--open .select2-dropdown--below {
+        box-shadow: 0 35px 35px rgba(0, 0, 0, .15);
+        margin-top: -1px
+    }
+
+    .woocommerce-checkout .select2-container--open .select2-dropdown--below .select2-search--dropdown {
+        padding: 4px 16px 16px
+    }
+
+    .woocommerce-checkout .select2-container--open .select2-dropdown--above {
+        box-shadow: none;
+        margin-top: 2px
+    }
+
+    .woocommerce-checkout .select2-container--open .select2-dropdown--above .select2-search--dropdown {
+        padding: 16px
+    }
+*/
+    .woocommerce-checkout .select2-selection--single .select2-selection__rendered,
+    .woocommerce-checkout .select2-selection__rendered,
+    .woocommerce-checkout .select2-selection__rendered .select2-selection__placeholder {
+        @apply flex! items-center! p-0! h-full! text-sm! text-neutral-900!;
+    }
+
+    .woocommerce-checkout .select2-selection {
+        height: 100% !important;
+        padding: 18px 0 0 0 !important;
+        transition: none
+    }
+
+    .woocommerce-checkout .select2-container .select2-selection--single {
+        position: relative;
+        background-color: transparent !important;
+        border: none !important;
+    }
+  
+    .woocommerce-checkout .select2-selection__arrow {
+        background-color: #505050;
+        content: "";
+        width: 22px !important;
+        height: 100% !important;
+        mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOC4yNSAxNSAxMiAxOC43NSAxNS43NSAxNW0tNy41LTZMMTIgNS4yNSAxNS43NSA5IiAvPg0KPC9zdmc+DQo=);
+        mask-position: center;
+        mask-repeat: no-repeat;
+        position: absolute;
+        top: 0 !important;
+        right: 0 !important;
+        transition: all .3s ease-in-out;
+    }
+
+    .woocommerce-checkout .select2-selection__arrow b {
+        display: none !important
+    }
+/*
+    .woocommerce-checkout .select2-results__option {
+        color: #5f6061;
+        outline: none;
+        padding: 8px 16px
+    }
+
+    .woocommerce-checkout .select2-container--default .select2-results__option[aria-selected=true],
+    .woocommerce-checkout .select2-container--default .select2-results__option[data-selected=true] {
+        background-color: #e5e5e5;
+        color: #16110e
+    }
+
+    .woocommerce-checkout .select2-container--default .select2-results__option--highlighted[aria-selected],
+    .woocommerce-checkout .select2-container--default .select2-results__option--highlighted[data-selected] {
+        background-color: #16110e;
+        color: #fff
+    } */
 
     /* ── Native <dialog> Login Modal ────────────────────────────────────────────
      * Replaces the Alpine overlay + positioned div pattern.
      * ────────────────────────────────────────────────────────────────────────── */
     #checkout-login-dialog {
-        @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-               w-[calc(100%-2rem)] max-w-md bg-white rounded-2xl shadow-2xl p-6 border-0 m-0;
+        @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-md bg-white rounded-2xl shadow-2xl p-6 border-0 m-0;
 
         /* Animate in via CSS transition (dialog[open] is set natively) */
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.95);
         transition: opacity 200ms ease-out, transform 200ms ease-out,
-                    overlay 200ms allow-discrete, display 200ms allow-discrete;
+            overlay 200ms allow-discrete, display 200ms allow-discrete;
 
         &[open] {
             opacity: 1;
@@ -177,8 +287,8 @@
             backdrop-filter: blur(2px);
             opacity: 0;
             transition: opacity 200ms ease-out,
-                        overlay 200ms allow-discrete,
-                        display 200ms allow-discrete;
+                overlay 200ms allow-discrete,
+                display 200ms allow-discrete;
         }
 
         &[open]::backdrop {
@@ -194,8 +304,9 @@
      * The <summary> click opens/closes natively. On desktop we force it open.
      * ────────────────────────────────────────────────────────────────────────── */
     .checkout-order-summary-details {
+
         /* Remove default marker */
-        & > summary {
+        &>summary {
             list-style: none;
 
             &::-webkit-details-marker {
@@ -211,15 +322,15 @@
 
     /* On desktop, always show the order review panel regardless of open state */
     @media (min-width: 1024px) {
+
         .checkout-order-summary-details,
         .checkout-order-summary-details[open] {
             /* Force the content panel visible via CSS — the details element
                controls mobile only. The summary bar is hidden via lg:hidden. */
         }
 
-        .checkout-order-summary-details > .order-review-panel {
+        .checkout-order-summary-details>.order-review-panel {
             display: block !important;
         }
     }
 }
-

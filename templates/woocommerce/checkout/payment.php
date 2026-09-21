@@ -21,14 +21,9 @@ if (! wp_doing_ajax()) {
 <div id="payment" class="woocommerce-checkout-payment pt-2">
     <?php if (WC()->cart && WC()->cart->needs_payment()) : ?>
 
-        <div class="mb-4">
-            <h2 class="text-lg font-semibold text-neutral-900 tracking-tight">
-                <?php esc_html_e('Payment', 'woocommerce'); ?>
-            </h2>
-            <p class="text-xs text-neutral-500 mt-0.5">
-                <?php echo esc_html__('All transactions are secure and encrypted.', 'woocommerce'); ?>
-            </p>
-        </div>
+        <h2 class="text-lg mb-4 font-semibold text-neutral-900 tracking-tight">
+            <?php esc_html_e('Payment', 'woocommerce'); ?>
+        </h2>
 
         <!-- Unified Payment Methods Container -->
         <ul class="wc_payment_methods payment_methods methods rounded-xl border border-neutral-300 divide-y divide-neutral-200 overflow-hidden bg-white shadow-2xs">
@@ -63,11 +58,11 @@ if (! wp_doing_ajax()) {
         <!-- Action Row (Return to Cart & Pay Now) -->
         <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 mt-8 pt-4 border-t border-neutral-200/60">
             <a
-                class="w-full sm:w-auto text-center sm:text-left text-sm font-medium text-neutral-600 hover:text-neutral-900 flex items-center justify-center sm:justify-start gap-1.5 py-2.5 transition-colors"
+                class="mr-1.5 flex w-full items-center justify-center gap-1.5 py-2.5 text-center text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 sm:w-auto sm:justify-start sm:text-left"
                 href="<?php echo esc_url(wc_get_cart_url()); ?>"
                 role="button">
                 <svg class="size-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
                 <span><?php echo esc_html__('Return to cart', 'woocommerce'); ?></span>
             </a>

@@ -118,6 +118,9 @@ class Checkout
         // Dequeue WooCommerce Checkout Block styles and scripts
         wp_dequeue_script('wc-checkout-block');
 
+        wp_dequeue_script( 'wc-address-i18n' );
+        wp_deregister_script( 'wc-address-i18n' );
+
         // Ensure the classic checkout scripts load so AJAX cart calculation
         // and third-party payment gateways still function correctly.
         wp_enqueue_script('wc-checkout');
