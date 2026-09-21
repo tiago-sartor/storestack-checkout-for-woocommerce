@@ -1253,16 +1253,11 @@
     }
   }
   .woocommerce-checkout .select2-container {
+    position: absolute !important;
+    inset: 0px !important;
     width: 100% !important;
     height: 100% !important;
     background-color: transparent !important;
-    transition-property: all !important;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function)) !important;
-    transition-duration: var(--tw-duration, var(--default-transition-duration)) !important;
-    --tw-duration: 300ms !important;
-    transition-duration: 300ms !important;
-    --tw-ease: var(--ease-in-out) !important;
-    transition-timing-function: var(--ease-in-out) !important;
   }
   .woocommerce-checkout .select2-selection--single .select2-selection__rendered, .woocommerce-checkout .select2-selection__rendered, .woocommerce-checkout .select2-selection__rendered .select2-selection__placeholder {
     display: flex !important;
@@ -1274,9 +1269,10 @@
     color: var(--color-neutral-900) !important;
   }
   .woocommerce-checkout .select2-selection {
+    position: relative !important;
     height: 100% !important;
-    padding: 18px 0 0 0 !important;
-    transition: none;
+    padding-inline: calc(var(--spacing) * 3.5) !important;
+    padding-top: calc(var(--spacing) * 4.5) !important;
   }
   .woocommerce-checkout .select2-container .select2-selection--single {
     position: relative;
@@ -1293,7 +1289,7 @@
     mask-repeat: no-repeat;
     position: absolute;
     top: 0 !important;
-    right: 0 !important;
+    right: 8px !important;
     transition: all .3s ease-in-out;
   }
   .woocommerce-checkout .select2-selection__arrow b {
