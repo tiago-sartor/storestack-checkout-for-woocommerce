@@ -46,7 +46,7 @@
 
 @layer base {
     html {
-        @apply text-base text-neutral-800;
+        @apply font-sans text-base text-neutral-800;
     }
 
     button:not(:disabled),
@@ -86,8 +86,7 @@
     .woocommerce-error,
     .woocommerce-info,
     .woocommerce-message {
-        @apply my-4 p-4 rounded-lg text-sm border flex items-start gap-3;
-        list-style: none;
+        @apply my-4 flex list-none items-start gap-3 rounded-lg border p-4 text-sm;
     }
 
     .woocommerce-error {
@@ -107,13 +106,13 @@
      * No JavaScript needed — uses :focus-within, :has(), and placeholder=" ".
      * ────────────────────────────────────────────────────────────────────────── */
     .checkout-form-field {
-        @apply relative flex items-center h-12 px-3.5 bg-white border border-neutral-300
-            rounded-lg focus-within:border-neutral-900 focus-within:ring-1
-            focus-within:ring-neutral-900 transition-all;
+        @apply relative flex h-12 items-center rounded-lg border border-neutral-300
+            bg-white transition-all focus-within:border-neutral-900
+            focus-within:ring-1 focus-within:ring-neutral-900;
 
         /* The <label> floats to the top when the field is active */
         & label {
-            @apply absolute left-3.5 top-3.5 text-sm text-neutral-500 pointer-events-none
+            @apply pointer-events-none absolute top-3.5 left-3.5 text-sm text-neutral-500
                 transition-all duration-150 ease-out select-none;
         }
 
@@ -129,70 +128,47 @@
             @apply top-1.5 text-[11px] font-medium;
         }
 
-        /* Push input text down when label is floating */
+        & .woocommerce-input-wrapper {
+            @apply size-full;
+        }
+
+        & input {
+            @apply size-full bg-transparent px-3.5 text-sm text-neutral-900 transition-all focus:outline-none;
+        }
+
         &:focus-within input,
         &:has(input:not(:placeholder-shown)) input,
         &:has(input:-webkit-autofill) input {
             @apply pt-4;
         }
 
-        & .woocommerce-input-wrapper,
-        & input {
-            @apply size-full bg-transparent text-sm text-neutral-900 transition-all focus:outline-none;
-        }
-
         & select {
-            @apply absolute inset-0 size-full cursor-pointer appearance-none bg-transparent
-                px-3.5 pt-4 text-sm text-neutral-900 focus:outline-none;
+            @apply size-full cursor-pointer appearance-none bg-transparent px-3.5 pt-4 text-sm text-neutral-900 focus:outline-none;
         }
     }
 
     /* SELECT2 */
     .woocommerce-checkout .select2-container {
-        @apply absolute! inset-0! size-full! bg-transparent!;
+        @apply size-full! bg-transparent!;
     }
-/*
+
     .woocommerce-checkout .select2-container--open .select2-dropdown {
-        border-color: #16110e !important;
-        font-family: Inter, sans-serif;
-        overflow: hidden
+        @apply border-neutral-300! shadow-lg!;
     }
 
-    .woocommerce-checkout .select2-container--open .select2-dropdown * {
-        font-family: Inter, sans-serif;
+    .woocommerce-checkout .select2-search--dropdown {
+        @apply p-2!;
     }
 
-    .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field,
-    .woocommerce-checkout .select2-selection {
-        border: 1px solid #e5e5e5;
-        border-radius: 4px;
-        box-shadow: none;
-        color: #16110e;
-        font-size: 16px;
-        line-height: 28px;
-        width: 100%
+    .woocommerce-checkout .select2-search--dropdown .select2-search__field {
+        @apply rounded-md! border! border-neutral-300! px-3.5! py-2! text-sm!;
     }
 
     .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field:focus,
-    .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field:hover,
-    .woocommerce-checkout .select2-selection:focus,
-    .woocommerce-checkout .select2-selection:hover {
-        border-color: #16110e;
-        outline: unset
+    .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field:hover {
+        @apply border-neutral-900! ring-1! ring-neutral-900! outline-none!;
     }
-
-    .woocommerce-checkout .select2-search__field {
-        -webkit-appearance: auto;
-        -moz-appearance: auto;
-        appearance: auto;
-        padding: 4px 16px
-    }
-
-    .woocommerce-checkout .select2-container--open .select2-dropdown--below {
-        box-shadow: 0 35px 35px rgba(0, 0, 0, .15);
-        margin-top: -1px
-    }
-
+/*
     .woocommerce-checkout .select2-container--open .select2-dropdown--below .select2-search--dropdown {
         padding: 4px 16px 16px
     }
@@ -209,54 +185,46 @@
     .woocommerce-checkout .select2-selection--single .select2-selection__rendered,
     .woocommerce-checkout .select2-selection__rendered,
     .woocommerce-checkout .select2-selection__rendered .select2-selection__placeholder {
-        @apply flex! items-center! p-0! h-full! text-sm! text-neutral-900!;
+        @apply flex! h-full! items-center! p-0! text-sm! text-neutral-900!;
     }
 
     .woocommerce-checkout .select2-selection {
-        @apply relative! h-full! px-3.5! pt-4.5!;
+        @apply h-full! px-3.5! pt-4.5!;
     }
 
     .woocommerce-checkout .select2-container .select2-selection--single {
-        position: relative;
-        background-color: transparent !important;
-        border: none !important;
+        @apply relative! bg-transparent! border-none!;
     }
   
     .woocommerce-checkout .select2-selection__arrow {
-        background-color: #505050;
+        @apply absolute! top-0! right-2! h-full! w-5.5! bg-neutral-500! mask-center! mask-no-repeat! transition-all! duration-300! ease-in-out!;
         content: "";
-        width: 22px !important;
-        height: 100% !important;
         mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOC4yNSAxNSAxMiAxOC43NSAxNS43NSAxNW0tNy41LTZMMTIgNS4yNSAxNS43NSA5IiAvPg0KPC9zdmc+DQo=);
-        mask-position: center;
-        mask-repeat: no-repeat;
-        position: absolute;
-        top: 0 !important;
-        right: 8px !important;
-        transition: all .3s ease-in-out;
     }
 
     .woocommerce-checkout .select2-selection__arrow b {
-        display: none !important
+        @apply hidden!;
     }
-/*
+
+    .woocommerce-checkout .select2-results {
+        @apply pt-1!;
+    }
+
+    .woocommerce-checkout .select2-results__options {
+        @apply space-y-1! px-3! pb-3!;
+    }
+
     .woocommerce-checkout .select2-results__option {
-        color: #5f6061;
-        outline: none;
-        padding: 8px 16px
+        @apply rounded-md! px-3.5! py-2! text-sm! text-neutral-600! transition-all! duration-300! ease-in-out!;
     }
 
-    .woocommerce-checkout .select2-container--default .select2-results__option[aria-selected=true],
     .woocommerce-checkout .select2-container--default .select2-results__option[data-selected=true] {
-        background-color: #e5e5e5;
-        color: #16110e
+        @apply bg-neutral-800! font-medium! text-white!;
     }
 
-    .woocommerce-checkout .select2-container--default .select2-results__option--highlighted[aria-selected],
-    .woocommerce-checkout .select2-container--default .select2-results__option--highlighted[data-selected] {
-        background-color: #16110e;
-        color: #fff
-    } */
+    .woocommerce-checkout .select2-container--default .select2-results__option--highlighted[data-selected=false] {
+        @apply bg-neutral-200! text-neutral-800!;
+    }
 
     /* ── Native <dialog> Login Modal ────────────────────────────────────────────
      * Replaces the Alpine overlay + positioned div pattern.
