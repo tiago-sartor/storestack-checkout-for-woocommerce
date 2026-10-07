@@ -28,7 +28,7 @@ if (apply_filters('woocommerce_checkout_show_terms', true) && function_exists('w
 
 		<?php if (wc_terms_and_conditions_checkbox_enabled()) : ?>
 			<p class="form-row validate-required mt-3">
-				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox inline-flex cursor-pointer items-center gap-2.5 font-medium leading-normal select-none hover:text-neutral-900">
+				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox inline-flex cursor-pointer items-center gap-2 font-medium leading-normal select-none hover:text-neutral-900">
 					<input
 						type="checkbox"
 						class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox size-3.5 border-neutral-300 accent-neutral-900 cursor-pointer"

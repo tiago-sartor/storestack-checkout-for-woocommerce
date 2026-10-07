@@ -5,9 +5,9 @@
     --font-sans: "Inter", sans-serif;
 
     /* Animations */
-    --animate-fade-in: fade-in ease-in-out;
-    --animate-fade-in-down: fade-in-down ease-in-out;
-    --animate-fade-in-up: fade-in-up ease-in-out;
+    --animate-fade-in: fade-in 500ms ease-in-out;
+    --animate-fade-in-down: fade-in-down 500ms ease-in-out;
+    --animate-fade-in-up: fade-in-up 500ms ease-in-out;
 
     @keyframes fade-in {
         from {
@@ -46,7 +46,7 @@
 
 @layer base {
     html {
-        @apply font-sans text-base text-neutral-800;
+        @apply font-sans text-base text-neutral-900;
     }
 
     button:not(:disabled),
@@ -106,14 +106,13 @@
      * No JavaScript needed — uses :focus-within, :has(), and placeholder=" ".
      * ────────────────────────────────────────────────────────────────────────── */
     .checkout-form-field {
-        @apply relative flex h-12 items-center rounded-lg border border-neutral-300
-            bg-white transition-all focus-within:border-neutral-900
+        @apply relative h-12 rounded-lg border border-neutral-300 bg-white focus-within:border-neutral-900
             focus-within:ring-1 focus-within:ring-neutral-900;
 
         /* The <label> floats to the top when the field is active */
         & label {
             @apply pointer-events-none absolute top-3.5 left-3.5 text-sm text-neutral-500
-                transition-all duration-150 ease-out select-none;
+                transition-all duration-200 ease-in-out select-none;
         }
 
         /* Float label up when input is focused */
@@ -129,11 +128,11 @@
         }
 
         & .woocommerce-input-wrapper {
-            @apply size-full;
+            @apply block size-full;
         }
 
         & input {
-            @apply size-full bg-transparent px-3.5 text-sm text-neutral-900 transition-all focus:outline-none;
+            @apply size-full bg-transparent px-3.5 text-sm text-neutral-900 transition-all duration-200 ease-in-out focus:outline-none;
         }
 
         &:focus-within input,
@@ -146,6 +145,58 @@
             @apply size-full cursor-pointer appearance-none bg-transparent px-3.5 pt-4 text-sm text-neutral-900 focus:outline-none;
         }
     }
+
+    /* ── Checkout Fields Flow ──────────────────────────────────────────────────
+     * Fluid row-based field display respecting WooCommerce form-row classes.
+     * Supports Brazilian (Extra_Checkout_Fields_For_Brazil) & International layouts.
+     * ────────────────────────────────────────────────────────────────────────── */
+    .checkout-fields-flow {
+        @apply flex flex-wrap gap-3;
+
+        & .checkout-form-field,
+        & .form-row {
+            @apply w-full mb-0;
+        }
+
+        @variant sm {
+            /* Standard 50% half-width pairs */
+            & .checkout-form-field.form-row-first,
+            & .checkout-form-field.form-row-last {
+                width: calc(50% - 0.4375rem);
+            }
+
+            /* Explicit full-width */
+            & .checkout-form-field.form-row-wide {
+                width: 100%;
+            }
+
+            /* International Layout: 3-column row for City / State / ZIP */
+            &.layout-international {
+                & #billing_city_field,
+                & #shipping_city_field {
+                    width: calc(40% - 0.583rem);
+                }
+
+                & #billing_state_field,
+                & #shipping_state_field {
+                    width: calc(30% - 0.583rem);
+                }
+
+                & #billing_postcode_field,
+                & #shipping_postcode_field {
+                    width: calc(30% - 0.583rem);
+                }
+            }
+        }
+    }
+
+    /*
+     * Inline error message for invalid checkout fields.
+     */
+    .checkout-inline-error-message {
+        @apply mt-1.5 ml-0.5 block text-xs font-medium text-red-600;
+    }
+
 
     /* SELECT2 */
     .woocommerce-checkout .select2-container {
@@ -168,20 +219,7 @@
     .woocommerce-checkout .select2-container--default .select2-search--dropdown .select2-search__field:hover {
         @apply border-neutral-900! ring-1! ring-neutral-900! outline-none!;
     }
-/*
-    .woocommerce-checkout .select2-container--open .select2-dropdown--below .select2-search--dropdown {
-        padding: 4px 16px 16px
-    }
-
-    .woocommerce-checkout .select2-container--open .select2-dropdown--above {
-        box-shadow: none;
-        margin-top: 2px
-    }
-
-    .woocommerce-checkout .select2-container--open .select2-dropdown--above .select2-search--dropdown {
-        padding: 16px
-    }
-*/
+    
     .woocommerce-checkout .select2-selection--single .select2-selection__rendered,
     .woocommerce-checkout .select2-selection__rendered,
     .woocommerce-checkout .select2-selection__rendered .select2-selection__placeholder {
@@ -197,8 +235,7 @@
     }
   
     .woocommerce-checkout .select2-selection__arrow {
-        @apply absolute! top-0! right-2! h-full! w-5.5! bg-neutral-500! mask-center! mask-no-repeat! transition-all! duration-300! ease-in-out!;
-        content: "";
+        @apply content-none! absolute! top-0! right-2! h-full! w-5.5! bg-neutral-600! mask-center! mask-no-repeat!;
         mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOC4yNSAxNSAxMiAxOC43NSAxNS43NSAxNW0tNy41LTZMMTIgNS4yNSAxNS43NSA5IiAvPg0KPC9zdmc+DQo=);
     }
 
@@ -223,38 +260,38 @@
     }
 
     .woocommerce-checkout .select2-container--default .select2-results__option--highlighted[data-selected=false] {
-        @apply bg-neutral-200! text-neutral-800!;
+        @apply bg-neutral-200! text-neutral-900!;
     }
 
     /* ── Native <dialog> Login Modal ────────────────────────────────────────────
      * Replaces the Alpine overlay + positioned div pattern.
      * ────────────────────────────────────────────────────────────────────────── */
     #checkout-login-dialog {
-        @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-md bg-white rounded-2xl shadow-2xl p-6 border-0 m-0;
-
         /* Animate in via CSS transition (dialog[open] is set natively) */
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.95);
-        transition: opacity 200ms ease-out, transform 200ms ease-out,
-            overlay 200ms allow-discrete, display 200ms allow-discrete;
+        form {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 300ms ease-in-out, transform 300ms ease-in-out,
+                overlay 300ms allow-discrete, display 300ms allow-discrete;
+        }
 
-        &[open] {
+        &[open] form {
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+            transform: scale(1);
 
             @starting-style {
                 opacity: 0;
-                transform: translate(-50%, -50%) scale(0.95);
+                transform: scale(0.95);
             }
         }
 
         &::backdrop {
-            background: rgb(0 0 0 / 0.4);
+            background: rgb(0 0 0 / 0.5);
             backdrop-filter: blur(2px);
             opacity: 0;
-            transition: opacity 200ms ease-out,
-                overlay 200ms allow-discrete,
-                display 200ms allow-discrete;
+            transition: opacity 300ms ease-in-out,
+                overlay 300ms allow-discrete,
+                display 300ms allow-discrete;
         }
 
         &[open]::backdrop {

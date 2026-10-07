@@ -26,7 +26,7 @@ defined('ABSPATH') || exit;
                 value="<?php echo esc_attr($gateway->id); ?>"
                 <?php checked($gateway->chosen, true); ?>
                 data-order_button_text="<?php echo esc_attr($gateway->order_button_text); ?>" />
-            <span class="text-sm font-medium text-neutral-900 truncate"><?php echo esc_html($gateway->get_title()); ?></span>
+            <span class="text-sm font-medium truncate"><?php echo esc_html($gateway->get_title()); ?></span>
         </div>
         <div class="payment-method-icon shrink-0 flex items-center gap-2 [&_img]:h-6 [&_img]:w-auto [&_img]:object-contain">
             <?php echo wp_kses_post($gateway->get_icon()); ?>

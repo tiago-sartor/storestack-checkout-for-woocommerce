@@ -68,14 +68,14 @@ export function isValidBRPhone(value: string): boolean {
  * Validate a Brazilian postcode (CEP) — 8 digits.
  */
 export function isValidBRPostcode(value: string): boolean {
-    return /^\d{5}-?\d{3}$/.test(value.trim());
+    const digits = value.replace(/\D/g, '');
+    return digits.length === 8;
 }
 
 /**
- * Format text input with title-case capitalisation (on blur).
- * Skips formatting for inputs that should not be transformed (emails etc.).
+ * Format text input with title-case capitalization.
  */
-export function formatTextInput(value: string): string {
+export function capitalizeWords(value: string): string {
     return value
         .split(' ')
         .map((word) =>
@@ -87,12 +87,12 @@ export function formatTextInput(value: string): string {
 }
 
 /**
- * Show a field error message in the dedicated <p data-error-for="fieldId"> element.
+ * Show a field error message in the dedicated <span data-error-for="fieldId"> element.
  * If no such element exists the error is silently ignored.
  */
 export function showFieldError(fieldId: string, message: string): void {
-    const el = document.querySelector<HTMLParagraphElement>(
-        `p[data-error-for="${fieldId}"]`
+    const el = document.querySelector<HTMLSpanElement>(
+        `span[data-error-for="${fieldId}"]`
     );
     if (el) {
         el.textContent = message;
@@ -105,8 +105,8 @@ export function showFieldError(fieldId: string, message: string): void {
  * Clear a field error previously set by showFieldError.
  */
 export function clearFieldError(fieldId: string): void {
-    const el = document.querySelector<HTMLParagraphElement>(
-        `p[data-error-for="${fieldId}"]`
+    const el = document.querySelector<HTMLSpanElement>(
+        `span[data-error-for="${fieldId}"]`
     );
     if (el) {
         el.textContent = '';

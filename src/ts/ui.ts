@@ -94,4 +94,3 @@ export function initMobileTotalSync(): void {
     // Also run once on load to populate the badge immediately.
     syncTotal();
 }
-

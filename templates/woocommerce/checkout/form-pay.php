@@ -37,7 +37,7 @@ woocommerce_output_all_notices();
             <div id="payment" class="woocommerce-checkout-payment pt-2">
                 <?php if ($order->needs_payment()) : ?>
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold text-neutral-900 tracking-tight">
+                        <h2 class="text-lg font-semibold tracking-tight">
                             <?php esc_html_e('Payment', 'woocommerce'); ?>
                         </h2>
                         <p class="text-xs text-neutral-500 mt-0.5">
@@ -81,7 +81,7 @@ woocommerce_output_all_notices();
         <!-- Order Summary (Right Column) -->
         <div class="order-first lg:order-last lg:col-span-5 mb-8 lg:mb-0">
             <div class="lg:sticky lg:top-8 bg-neutral-50 border border-neutral-200/90 rounded-2xl p-5 sm:p-7 shadow-xs">
-                <h3 class="text-base font-semibold text-neutral-900 mb-6 pb-4 border-b border-neutral-200/70">
+                <h3 class="text-base font-semibold mb-6 pb-4 border-b border-neutral-200/70">
                     <?php esc_html_e('Order summary', 'woocommerce'); ?>
                 </h3>
                 <?php wc_get_template('order/order-details.php', ['order' => $order]); ?>

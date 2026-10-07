@@ -1,29 +1,33 @@
 <?php
+/**
+ * Template for additional checkout fields
+ *
+ * @package StoreStackCheckoutForWooCommerce
+ * @version 1.0.0
+ */
 
 declare(strict_types=1);
+
 defined('ABSPATH') || exit;
+
+
+do_action('woocommerce_before_order_notes', $checkout);
 ?>
 
-<div class="my-6">
+<?php if (apply_filters('woocommerce_enable_order_notes_field', 'yes' === get_option('woocommerce_enable_order_comments', 'yes'))) : ?>
 
-    <?php do_action('woocommerce_before_order_notes', $checkout); ?>
-
-    <?php if (apply_filters('woocommerce_enable_order_notes_field', 'yes' === get_option('woocommerce_enable_order_comments', 'yes'))) : ?>
-
-        <div>
-            <label for="order-notes-toggle" class="inline-flex items-center gap-3 cursor-pointer select-none text-sm text-neutral-800 hover:text-neutral-950 transition-colors">
-                <input
-                    id="order-notes-toggle"
-                    class="peer size-4.5 rounded-md border-neutral-300 accent-neutral-900 cursor-pointer"
-                    type="checkbox"
-                    name="order-notes-toggle"
-                    value="" />
-                <span class="font-medium"><?php echo esc_html__('Add order notes or instructions', 'woocommerce'); ?></span>
-            </label>
-        </div>
+        <label for="order-notes" class="peer inline-flex cursor-pointer items-center gap-3 text-sm transition-colors select-none hover:underline">
+            <input
+                id="order-notes"
+                name="order-notes"
+                class="size-4.5 cursor-pointer rounded-md border-neutral-300 accent-neutral-900"
+                type="checkbox"
+                value="" />
+            <span class="font-medium"><?php echo esc_html__('Add order notes or instructions', 'woocommerce'); ?></span>
+        </label>
 
         <!-- Hidden by default; revealed when the checkbox above is checked via CSS peer pattern -->
-        <div class="hidden peer-checked:block woocommerce-additional-fields__field-wrapper mt-3">
+        <div class="woocommerce-additional-fields__field-wrapper mt-3 hidden peer-has-[input:checked]:block">
             <?php foreach ($checkout->get_checkout_fields('order') as $key => $field) : ?>
                 <?php
                 if ($key === 'order_comments') :
@@ -48,7 +52,7 @@ defined('ABSPATH') || exit;
             <?php endforeach; ?>
         </div>
 
-    <?php endif; ?>
+<?php endif; ?>
 
-    <?php do_action('woocommerce_after_order_notes', $checkout); ?>
-</div>
+<?php
+do_action('woocommerce_after_order_notes', $checkout);

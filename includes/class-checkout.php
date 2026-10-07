@@ -21,8 +21,17 @@ class Checkout
         add_filter('template_include', [$this, 'override_checkout_template'], 9999);
         add_filter('woocommerce_locate_template', [$this, 'override_checkout_template_parts'], 9999, 3);
 
+        add_filter('woocommerce_form_field', [$this, 'add_error_message_to_form_field'], 10, 4);
+
         // Disable product variation attributes in product titles on the checkout page.
         add_filter('woocommerce_product_variation_title_include_attributes', '__return_false');
+        
+        // Remove default WooCommerce sections from the checkout page.
+        // This is done to prevent duplicate content and to allow our custom checkout template
+        // to take full control of the layout and functionality.
+        remove_action('woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20);
+        remove_action('woocommerce_before_checkout_form', 'woocommerce_output_all_notices');
+        remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form');
 
         add_action('wp_enqueue_scripts', [$this, 'checkout_enqueue_scripts'], 9999);
     }
@@ -88,6 +97,32 @@ class Checkout
         return file_exists($override_template) ? $override_template : $template;
     }
 
+    public function add_error_message_to_form_field(string $field, string $key, array $args, ?string $value): string
+    {
+        // Only add error message for checkout form fields.
+        if (! $this->is_checkout_page()) {
+            return $field;
+        }
+
+        // Add a <p> element for displaying error messages.
+        $error_html = sprintf(
+            '<span class="field-error mt-1.5 ml-0.5 block text-xs font-medium text-red-600" data-error-for="%1$s" hidden aria-hidden="true"></span>',
+            esc_attr($key)
+        );
+
+        // If the field wrapper ends with </p>, insert the error before it closes:
+        if (str_ends_with(rtrim($field), '</p>')) {
+            return substr_replace(rtrim($field), $error_html . '</p>', -4);
+        }
+
+        // Fallback: append inside if wrapped in </div> or just append
+        if (str_ends_with(rtrim($field), '</div>')) {
+            return substr_replace(rtrim($field), $error_html . '</div>', -6);
+        }
+
+        return $field . $error_html;
+    }
+
     public function checkout_enqueue_scripts(): void
     {
         if (! $this->is_checkout_page()) {
@@ -118,8 +153,8 @@ class Checkout
         // Dequeue WooCommerce Checkout Block styles and scripts
         wp_dequeue_script('wc-checkout-block');
 
-        wp_dequeue_script( 'wc-address-i18n' );
-        wp_deregister_script( 'wc-address-i18n' );
+        wp_dequeue_script('wc-address-i18n');
+        wp_deregister_script('wc-address-i18n');
 
         // Ensure the classic checkout scripts load so AJAX cart calculation
         // and third-party payment gateways still function correctly.

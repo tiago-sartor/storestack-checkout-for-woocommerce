@@ -21,7 +21,7 @@ if (! wp_doing_ajax()) {
 <div id="payment" class="woocommerce-checkout-payment pt-2">
     <?php if (WC()->cart && WC()->cart->needs_payment()) : ?>
 
-        <h2 class="text-lg mb-4 font-semibold text-neutral-900 tracking-tight">
+        <h2 class="text-lg mb-4 font-semibold tracking-tight">
             <?php esc_html_e('Payment', 'woocommerce'); ?>
         </h2>
 

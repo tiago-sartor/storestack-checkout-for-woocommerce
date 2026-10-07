@@ -8,17 +8,22 @@
     "main": "index.js",
     "type": "module",
     "devDependencies": {
-        "@tailwindcss/cli": "^4.3.3",
         "esbuild": "^0.28.2",
         "tailwindcss": "^4.3.3",
-        "typescript": "^7.0.2"
+        "@tailwindcss/cli": "^4.3.3",
+        "webpack": "^5.111.1",
+        "webpack-cli": "^7.2.3"
     },
     "scripts": {
-        "tailwind-dev": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css --watch",
-        "tailwind-build": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css",
+        "dev": "npm run dev:webpack && npm run dev:tailwind",
+        "build": "npm run build:tailwind && npm run build:ts && npm run build:webpack",
         "build:js": "esbuild src/ts/index.ts --bundle --minify --outfile=assets/js/frontend.js --target=es2022 && esbuild src/ts/brazilian-fields-validation.ts --bundle --minify --outfile=assets/js/brazilian-fields-validation.js --target=es2022",
-        "build": "npm run tailwind-build && npm run build:js",
         "typecheck": "tsc --noEmit",
+        "build:ts": "tsc -p tsconfig.json",
+        "dev:tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css --watch",
+        "build:tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css",
+        "dev:webpack": "webpack --mode development --watch; ",
+        "build:webpack": "webpack --mode production",
         "upgrade-dependencies": "npx npm-check-updates -u && npm install"
     }
 }

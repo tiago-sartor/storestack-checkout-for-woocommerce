@@ -74,7 +74,7 @@ defined('ABSPATH') || exit;
                             <span class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">
                                 <?php printf(esc_html__('Order #%s', 'woocommerce'), esc_html($order->get_order_number())); ?>
                             </span>
-                            <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight mt-0.5">
+                            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mt-0.5">
                                 <?php printf(esc_html__('Thank you, %s!', 'woocommerce'), esc_html($order->get_billing_first_name())); ?>
                             </h1>
                         </div>
@@ -82,11 +82,11 @@ defined('ABSPATH') || exit;
 
                     <!-- Order Confirmation Message Card -->
                     <div class="p-5 rounded-xl border border-neutral-200/90 bg-white shadow-2xs space-y-1">
-                        <h3 class="text-sm font-semibold text-neutral-900">
+                        <h3 class="text-sm font-semibold">
                             <?php echo esc_html__('Your order is confirmed', 'woocommerce'); ?>
                         </h3>
                         <p class="text-xs text-neutral-600 leading-relaxed">
-                            <?php printf(esc_html__('We\'ve accepted your order, and we\'ll send updates to %s.', 'woocommerce'), '<strong class="font-medium text-neutral-900">' . esc_html($order->get_billing_email()) . '</strong>'); ?>
+                            <?php printf(esc_html__('We\'ve accepted your order, and we\'ll send updates to %s.', 'woocommerce'), '<strong class="font-medium">' . esc_html($order->get_billing_email()) . '</strong>'); ?>
                         </p>
                     </div>
 
@@ -100,7 +100,7 @@ defined('ABSPATH') || exit;
                     <?php if ($order->get_user_id() === get_current_user_id()) : ?>
                         <!-- Customer Information Card (Grid) -->
                         <div class="p-6 rounded-xl border border-neutral-200/90 bg-white shadow-2xs space-y-6">
-                            <h3 class="text-base font-semibold text-neutral-900">
+                            <h3 class="text-base font-semibold">
                                 <?php echo esc_html__('Order details', 'woocommerce'); ?>
                             </h3>
 
@@ -110,7 +110,7 @@ defined('ABSPATH') || exit;
                                     <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
                                         <?php echo esc_html__('Contact information', 'woocommerce'); ?>
                                     </h4>
-                                    <p class="text-neutral-900"><?php echo esc_html($order->get_billing_email()); ?></p>
+                                    <p class=""><?php echo esc_html($order->get_billing_email()); ?></p>
                                     <?php if ($phone = $order->get_billing_phone()) : ?>
                                         <p class="text-neutral-600 mt-0.5"><?php echo esc_html($phone); ?></p>
                                     <?php endif; ?>
@@ -121,7 +121,7 @@ defined('ABSPATH') || exit;
                                     <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
                                         <?php echo esc_html__('Payment method', 'woocommerce'); ?>
                                     </h4>
-                                    <p class="text-neutral-900 font-medium"><?php echo wp_kses_post($order->get_payment_method_title()); ?></p>
+                                    <p class="font-medium"><?php echo wp_kses_post($order->get_payment_method_title()); ?></p>
                                 </div>
 
                                 <!-- Shipping Address -->
@@ -129,7 +129,7 @@ defined('ABSPATH') || exit;
                                     <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
                                         <?php echo esc_html__('Shipping address', 'woocommerce'); ?>
                                     </h4>
-                                    <address class="not-italic text-neutral-800 leading-relaxed">
+                                    <address class="not-italic leading-relaxed">
                                         <?php
                                         $show_shipping = !wc_ship_to_billing_address_only() && $order->needs_shipping_address();
                                         if ($show_shipping) :
@@ -148,7 +148,7 @@ defined('ABSPATH') || exit;
                                     <h4 class="font-medium text-neutral-500 mb-1.5 uppercase text-2xs tracking-wider">
                                         <?php echo esc_html__('Billing address', 'woocommerce'); ?>
                                     </h4>
-                                    <address class="not-italic text-neutral-800 leading-relaxed">
+                                    <address class="not-italic leading-relaxed">
                                         <?php echo wp_kses_post($order->get_formatted_billing_address(esc_html__('N/A', 'woocommerce'))); ?>
                                     </address>
                                 </div>
@@ -158,7 +158,7 @@ defined('ABSPATH') || exit;
                                         <h4 class="font-medium text-neutral-500 mb-1 uppercase text-2xs tracking-wider">
                                             <?php echo esc_html__('Order notes', 'woocommerce'); ?>
                                         </h4>
-                                        <p class="text-neutral-800 italic"><?php echo wp_kses_post($customer_note); ?></p>
+                                        <p class="italic"><?php echo wp_kses_post($customer_note); ?></p>
                                     </div>
                                 <?php endif; ?>
                             </div>

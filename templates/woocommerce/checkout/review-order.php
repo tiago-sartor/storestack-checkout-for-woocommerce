@@ -48,7 +48,7 @@ defined('ABSPATH') || exit;
                     <!-- Details & Price -->
                     <div class="flex flex-1 items-start justify-between gap-4">
                         <div class="flex flex-col">
-                            <h4 class="font-medium text-neutral-900 truncate">
+                            <h4 class="font-medium truncate">
                                 <?php echo wp_kses_post($product_name); ?>
                             </h4>
 
@@ -69,7 +69,7 @@ defined('ABSPATH') || exit;
                             <?php endif; ?>
                         </div>
 
-                        <span class="font-medium text-neutral-900 whitespace-nowrap shrink-0">
+                        <span class="font-medium whitespace-nowrap shrink-0">
                             <?php echo wp_kses_post($product_subtotal); ?>
                         </span>
                     </div>
@@ -77,6 +77,8 @@ defined('ABSPATH') || exit;
         <?php
             }
         }
+
+        do_action('woocommerce_review_order_after_cart_contents');
         ?>
 
     </ul>
@@ -91,13 +93,13 @@ defined('ABSPATH') || exit;
                         name="coupon_code"
                         id="coupon_code"
                         placeholder="<?php esc_attr_e('Discount code or coupon', 'woocommerce'); ?>"
-                        class="w-full h-11 px-3.5 text-sm bg-white border border-neutral-200 rounded-lg placeholder-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition-colors"
+                        class="h-11 w-full rounded-lg border border-neutral-300 bg-white px-3.5 text-sm transition-colors placeholder:text-neutral-500 focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 focus:outline-none"
                         value="" />
                 </div>
                 <button
                     id="apply_coupon_btn"
                     type="button"
-                    class="h-11 px-5 text-sm font-medium text-neutral-700 bg-neutral-200 hover:bg-neutral-300 active:bg-neutral-400 rounded-lg transition-colors cursor-pointer shrink-0"
+                    class="h-11 shrink-0 cursor-pointer rounded-lg border border-neutral-200 bg-neutral-50 px-5 text-sm font-medium text-neutral-600 hover:text-neutral-800 hover:bg-neutral-200 active:bg-neutral-200"
                     name="apply_coupon"
                     value="<?php esc_attr_e('Apply', 'woocommerce'); ?>">
                     <?php esc_html_e('Apply', 'woocommerce'); ?>
@@ -108,7 +110,7 @@ defined('ABSPATH') || exit;
             <?php if ($coupons = WC()->cart->get_coupons()) : ?>
                 <div class="flex flex-wrap gap-2 mt-3">
                     <?php foreach ($coupons as $code => $coupon) : ?>
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold tracking-wide uppercase bg-neutral-200 text-neutral-800 rounded-md">
+                        <span class="relative inline-flex flex-nowrap items-center justify-center gap-1.5 rounded-md border-[1.5px] border-dashed border-neutral-400 bg-neutral-100 px-2 py-1 text-xs font-semibold tracking-wide uppercase">
                             <svg class="size-3.5 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
@@ -116,12 +118,12 @@ defined('ABSPATH') || exit;
                             <?php echo esc_html(strtoupper($code)); ?>
                             <a
                                 href="<?php echo esc_url(add_query_arg('remove_coupon', rawurlencode($code), wc_get_checkout_url())); ?>"
-                                class="woocommerce-remove-coupon group relative size-4 rounded-xs hover:bg-neutral-300 flex items-center justify-center transition-colors"
+                                class="woocommerce-remove-coupon group relative -mr-0.5 size-4 rounded-xs hover:bg-neutral-100"
                                 data-coupon="<?php echo esc_attr($code); ?>"
                                 role="button"
                                 aria-label="<?php esc_attr_e('Remove', 'woocommerce'); ?>">
-                                <svg viewBox="0 0 14 14" class="size-3 stroke-neutral-600 group-hover:stroke-neutral-900">
-                                    <path d="M4 4l6 6m0-6l-6 6" stroke-width="1.5"></path>
+                                <svg class="size-4 stroke-neutral-500 group-hover:stroke-neutral-900 transition-colors" viewBox="0 0 14 14" stroke-width="1">
+                                    <path d="M4 4l6 6m0-6l-6 6"></path>
                                 </svg>
                             </a>
                         </span>
@@ -132,31 +134,35 @@ defined('ABSPATH') || exit;
     <?php endif; ?>
 
     <!-- Order Totals Breakdown -->
-    <div class="py-4 space-y-3 text-sm">
+    <div class="py-4 space-y-3 text-[0.925rem]">
 
-        <div class="cart-subtotal flex justify-between items-center text-neutral-600">
+        <div class="cart-subtotal flex justify-between items-center">
             <span><?php esc_html_e('Subtotal', 'woocommerce'); ?></span>
-            <span class="font-medium text-neutral-900 whitespace-nowrap"><?php wc_cart_totals_subtotal_html(); ?></span>
+            <span class="font-medium whitespace-nowrap"><?php wc_cart_totals_subtotal_html(); ?></span>
         </div>
 
         <?php if (($discount_total = WC()->cart->get_discount_total()) && $discount_total > 0) : ?>
-            <div class="cart-discount flex justify-between items-center text-neutral-600">
+            <div class="cart-discount flex justify-between items-center">
                 <span><?php echo esc_html__('Discount', 'woocommerce'); ?></span>
                 <span class="font-semibold text-emerald-600 whitespace-nowrap"><?php echo wp_kses_post('-' . wc_price($discount_total)); ?></span>
             </div>
         <?php endif; ?>
 
         <?php foreach (WC()->cart->get_fees() as $fee) : ?>
-            <div class="fee flex justify-between items-center text-neutral-600">
+            <div class="fee flex justify-between items-center">
                 <span><?php echo esc_html($fee->name); ?></span>
-                <span class="font-medium text-neutral-900 whitespace-nowrap"><?php wc_cart_totals_fee_html($fee); ?></span>
+                <span class="font-medium whitespace-nowrap"><?php wc_cart_totals_fee_html($fee); ?></span>
             </div>
         <?php endforeach; ?>
 
         <?php if (WC()->cart->needs_shipping() && WC()->cart->show_shipping()) : ?>
+            <?php do_action('woocommerce_review_order_before_shipping'); ?>
+
             <div class="shipping-totals pt-1">
                 <?php wc_cart_totals_shipping_html(); ?>
             </div>
+
+            <?php do_action('woocommerce_review_order_after_shipping'); ?>
         <?php endif; ?>
 
     </div>
@@ -166,11 +172,11 @@ defined('ABSPATH') || exit;
     <!-- Total Line -->
     <div class="order-total flex items-baseline justify-between pt-4">
         <div class="flex flex-col">
-            <span class="text-base font-semibold text-neutral-900"><?php esc_html_e('Total', 'woocommerce'); ?></span>
+            <span class="text-lg font-bold"><?php esc_html_e('Total', 'woocommerce'); ?></span>
         </div>
         <div class="flex items-baseline gap-2">
-            <span class="text-xs font-semibold text-neutral-400 uppercase tracking-wider"><?php echo esc_html(get_woocommerce_currency()); ?></span>
-            <span class="text-2xl font-bold text-neutral-900 tracking-tight whitespace-nowrap">
+            <span class="text-xs font-semibold text-neutral-500 uppercase tracking-wider"><?php echo esc_html(get_woocommerce_currency()); ?></span>
+            <span class="text-xl font-bold tracking-tight whitespace-nowrap">
                 <?php echo wp_kses_post(WC()->cart->get_total()); ?>
             </span>
         </div>
