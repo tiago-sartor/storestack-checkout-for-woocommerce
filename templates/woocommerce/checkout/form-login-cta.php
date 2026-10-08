@@ -10,7 +10,9 @@
  */
 
 declare(strict_types=1);
+
 defined('ABSPATH') || exit;
+
 
 $registration_at_checkout   = WC_Checkout::instance()->is_registration_enabled();
 $login_reminder_at_checkout = 'yes' === get_option('woocommerce_enable_checkout_login_reminder');

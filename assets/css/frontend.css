@@ -286,6 +286,9 @@
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
   }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
+  }
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
   }
@@ -386,6 +389,9 @@
   .size-full {
     width: 100%;
     height: 100%;
+  }
+  .h-0 {
+    height: 0px;
   }
   .h-11 {
     height: calc(var(--spacing) * 11);
@@ -649,9 +655,6 @@
   }
   .bg-red-700 {
     background-color: var(--color-red-700);
-  }
-  .bg-transparent {
-    background-color: transparent;
   }
   .bg-white {
     background-color: var(--color-white);
@@ -928,13 +931,19 @@
     -webkit-user-select: none;
     user-select: none;
   }
+  .\[interpolate-size\:allow-keywords\] {
+    interpolate-size: allow-keywords;
+  }
   @media (hover: hover) {
     .group-hover\:stroke-neutral-900:is(:where(.group):hover *) {
       stroke: var(--color-neutral-900);
     }
   }
-  .peer-has-\[input\:checked\]\:block:is(:where(.peer):has(:is(input:checked)) ~ *) {
-    display: block;
+  .peer-has-\[input\:checked\]\:block\!:is(:where(.peer):has(:is(input:checked)) ~ *) {
+    display: block !important;
+  }
+  .peer-has-\[input\:checked\]\:h-auto\!:is(:where(.peer):has(:is(input:checked)) ~ *) {
+    height: auto !important;
   }
   .placeholder\:text-neutral-500::placeholder {
     color: var(--color-neutral-500);
@@ -1146,6 +1155,11 @@
       gap: calc(var(--spacing) * 14);
     }
   }
+  @starting-style {
+    .peer-has-\[input\:checked\]\:starting\:h-0\!:is(:where(.peer):has(:is(input:checked)) ~ *) {
+      height: 0px !important;
+    }
+  }
   .\[\&_img\]\:size-full img {
     width: 100%;
     height: 100%;
@@ -1230,27 +1244,12 @@
   }
   .checkout-form-field {
     position: relative;
-    height: calc(var(--spacing) * 12);
-    border-radius: var(--radius-lg);
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-    border-color: var(--color-neutral-300);
-    background-color: var(--color-white);
-    &:focus-within {
-      border-color: var(--color-neutral-900);
-    }
-    &:focus-within {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-    &:focus-within {
-      --tw-ring-color: var(--color-neutral-900);
-    }
     & label {
       pointer-events: none;
       position: absolute;
       top: calc(var(--spacing) * 3.5);
       left: calc(var(--spacing) * 3.5);
+      z-index: 10;
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
       color: var(--color-neutral-500);
@@ -1278,8 +1277,19 @@
     }
     & .woocommerce-input-wrapper {
       display: block;
+      height: calc(var(--spacing) * 12);
       width: 100%;
-      height: 100%;
+      border-radius: var(--radius-lg);
+      border-style: var(--tw-border-style);
+      border-width: 1px;
+      border-color: var(--color-neutral-300);
+      background-color: var(--color-white);
+    }
+    &:focus-within .woocommerce-input-wrapper {
+      border-color: var(--color-neutral-900);
+      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      --tw-ring-color: var(--color-neutral-900);
     }
     & input {
       width: 100%;

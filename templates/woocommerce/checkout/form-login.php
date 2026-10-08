@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Checkout login form
  *
@@ -10,7 +11,9 @@
  */
 
 declare(strict_types=1);
+
 defined('ABSPATH') || exit;
+
 
 $registration_at_checkout   = WC_Checkout::instance()->is_registration_enabled();
 $login_reminder_at_checkout = 'yes' === get_option('woocommerce_enable_checkout_login_reminder');
@@ -49,32 +52,36 @@ if (!$registration_at_checkout && !$login_reminder_at_checkout) {
         <div class="checkout-fields-flow mb-8 flex flex-wrap gap-3">
             <p class="form-row form-row-wide checkout-form-field">
                 <label for="username">
-                    <?php esc_html_e('Email', 'woocommerce'); ?>
+                    E-mail
                 </label>
-                <input
-                    class="size-full text-sm bg-transparent focus:outline-none transition-all"
-                    type="text"
-                    name="username"
-                    id="username"
-                    placeholder=""
-                    autocomplete="username"
-                    required
-                    aria-required="true" />
+                <span class="woocommerce-input-wrapper">
+                    <input
+                        class="input-text"
+                        type="text"
+                        name="username"
+                        id="username"
+                        placeholder=""
+                        autocomplete="username"
+                        required
+                        aria-required="true" />
+                </span>
             </p>
 
             <p class="form-row form-row-wide checkout-form-field">
                 <label for="password">
                     <?php esc_html_e('Password', 'woocommerce'); ?>
                 </label>
-                <input
-                    class="size-full text-sm bg-transparent focus:outline-none transition-all"
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder=""
-                    autocomplete="current-password"
-                    required
-                    aria-required="true" />
+                <span class="woocommerce-input-wrapper">
+                    <input
+                        class="input-text"
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder=""
+                        autocomplete="current-password"
+                        required
+                        aria-required="true" />
+                </span>
             </p>
         </div>
 

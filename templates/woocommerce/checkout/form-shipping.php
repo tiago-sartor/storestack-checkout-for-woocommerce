@@ -36,7 +36,7 @@ uasort($fields, function ($a, $b) {
             </label>
         </div>
 
-        <div class="relative my-4 shipping_address">
+        <div class="relative mt-4 mb-8 shipping_address">
 
             <?php if (file_exists(SSCFW_PLUGIN_PATH . 'templates/woocommerce/components/loading-spinner.php')) {
                 wc_get_template('components/loading-spinner.php');
