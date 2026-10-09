@@ -33,7 +33,7 @@ if (! $checkout->is_registration_enabled() && $checkout->is_registration_require
                 <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
 
                 <!-- Summary Bar (togglable on mobile) -->
-                <summary class="relative mb-4 lg:mb-6 flex items-center justify-between rounded-md border border-neutral-300 bg-neutral-50 p-4 lg:border-none lg:bg-transparent lg:p-0 lg:pointer-events-none">
+                <summary class="relative list-none mb-4 lg:mb-6 flex items-center justify-between rounded-md border border-neutral-300 bg-neutral-50 p-4 lg:border-none lg:bg-transparent lg:p-0 lg:pointer-events-none">
                     <div class="flex items-center justify-start gap-2">
                         <svg class="mb-0.75 size-5 lg:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
