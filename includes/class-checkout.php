@@ -25,7 +25,7 @@ class Checkout
 
         // Disable product variation attributes in product titles on the checkout page.
         add_filter('woocommerce_product_variation_title_include_attributes', '__return_false');
-        
+
         // Remove default WooCommerce sections from the checkout page.
         // This is done to prevent duplicate content and to allow our custom checkout template
         // to take full control of the layout and functionality.
@@ -33,7 +33,43 @@ class Checkout
         remove_action('woocommerce_before_checkout_form', 'woocommerce_output_all_notices');
         remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form');
 
+        // Keep an empty placeholder value so address-i18n does not fall back to the field label.
+        add_filter('woocommerce_get_country_locale', [$this, 'remove_placeholders_from_locales'], 9999);
+        add_filter('woocommerce_get_country_locale_base', [$this, 'remove_placeholders_from_base_locales'], 9999);
+
         add_action('wp_enqueue_scripts', [$this, 'checkout_enqueue_scripts'], 9999);
+    }
+
+
+    public function remove_placeholders_from_locales(array $locales): array
+    {
+        foreach ($locales as &$country_fields) {
+            if (! is_array($country_fields)) {
+                continue;
+            }
+
+            foreach ($country_fields as &$field) {
+                if (is_array($field)) {
+                    $field['placeholder'] = '';
+                }
+            }
+            unset($field);
+        }
+        unset($country_fields);
+
+        return $locales;
+    }
+
+    public function remove_placeholders_from_base_locales(array $fields): array
+    {
+        foreach ($fields as &$field) {
+            if (is_array($field)) {
+                $field['placeholder'] = '';
+            }
+        }
+        unset($field);
+
+        return $fields;
     }
 
     private function is_checkout_page(): bool
@@ -153,9 +189,6 @@ class Checkout
         // Dequeue WooCommerce Checkout Block styles and scripts
         wp_dequeue_script('wc-checkout-block');
 
-        wp_dequeue_script('wc-address-i18n');
-        wp_deregister_script('wc-address-i18n');
-
         // Ensure the classic checkout scripts load so AJAX cart calculation
         // and third-party payment gateways still function correctly.
         wp_enqueue_script('wc-checkout');
@@ -165,8 +198,8 @@ class Checkout
 
         // Enqueue core checkout JS (dialog, coupon AJAX, Enter-key guard, mobile total sync).
         wp_enqueue_script(
-            'storestack-checkout-frontend',
-            SSCFW_PLUGIN_URL . 'assets/js/frontend.js',
+            'storestack-checkout-bundle',
+            SSCFW_PLUGIN_URL . 'assets/js/checkout.js',
             ['jquery'],
             SSCFW_PLUGIN_VERSION,
             true
@@ -177,7 +210,7 @@ class Checkout
             wp_enqueue_script(
                 'storestack-checkout-brazilian-fields',
                 SSCFW_PLUGIN_URL . 'assets/js/brazilian-fields-validation.js',
-                ['storestack-checkout-frontend'],
+                ['storestack-checkout-bundle'],
                 SSCFW_PLUGIN_VERSION,
                 true
             );

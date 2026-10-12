@@ -277,6 +277,9 @@
   .mt-1\.5 {
     margin-top: calc(var(--spacing) * 1.5);
   }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
   }
@@ -529,11 +532,6 @@
     margin-block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
   }
-  :where(.space-y-8 > :not(:last-child)) {
-    --tw-space-y-reverse: 0;
-    margin-block-start: calc(calc(var(--spacing) * 8) * var(--tw-space-y-reverse));
-    margin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-reverse)));
-  }
   :where(.divide-y > :not(:last-child)) {
     --tw-divide-y-reverse: 0;
     border-bottom-style: var(--tw-border-style);
@@ -543,6 +541,9 @@
   }
   :where(.divide-neutral-200 > :not(:last-child)) {
     border-color: var(--color-neutral-200);
+  }
+  :where(.divide-neutral-300 > :not(:last-child)) {
+    border-color: var(--color-neutral-300);
   }
   .truncate {
     overflow: hidden;
@@ -576,10 +577,6 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
-  }
-  .border-\[1\.5px\] {
-    border-style: var(--tw-border-style);
-    border-width: 1.5px;
   }
   .border-t {
     border-top-style: var(--tw-border-style);
@@ -665,6 +662,9 @@
   .p-1\.5 {
     padding: calc(var(--spacing) * 1.5);
   }
+  .p-2 {
+    padding: calc(var(--spacing) * 2);
+  }
   .p-3 {
     padding: calc(var(--spacing) * 3);
   }
@@ -721,9 +721,6 @@
   }
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
-  }
-  .pt-1 {
-    padding-top: var(--spacing);
   }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
@@ -860,6 +857,9 @@
   .placeholder-neutral-400::placeholder {
     color: var(--color-neutral-400);
   }
+  .accent-current {
+    accent-color: currentcolor;
+  }
   .accent-neutral-900 {
     accent-color: var(--color-neutral-900);
   }
@@ -936,6 +936,10 @@
       stroke: var(--color-neutral-900);
     }
   }
+  .group-has-checked\:font-medium:is(:where(.group):has(:checked) *) {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
   .peer-has-\[input\:checked\]\:block\!:is(:where(.peer):has(:is(input:checked)) ~ *) {
     display: block !important;
   }
@@ -996,6 +1000,9 @@
   }
   .active\:bg-neutral-200:active {
     background-color: var(--color-neutral-200);
+  }
+  .has-checked\:bg-neutral-100:has(:checked) {
+    background-color: var(--color-neutral-100);
   }
   .has-\[\:checked\]\:border-2:has(:is(:checked)) {
     border-style: var(--tw-border-style);
@@ -1219,8 +1226,10 @@
       border-radius: var(--radius-xs) !important;
       border-color: var(--color-neutral-500) !important;
       .wcbcf-value-toggle-mark {
-        top: calc(var(--spacing) * -0.75) !important;
+        top: -2.25px !important;
         left: -1px !important;
+        width: calc(var(--spacing) * 3.5) !important;
+        height: calc(var(--spacing) * 3.5) !important;
       }
     }
     .wcbcf-value-toggle-text {
@@ -1231,6 +1240,11 @@
       --tw-tracking: var(--tracking-tight) !important;
       letter-spacing: var(--tracking-tight) !important;
       color: var(--color-neutral-500) !important;
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-neutral-800) !important;
+        }
+      }
     }
   }
   .checkout-form-field {
@@ -1322,32 +1336,25 @@
       }
     }
   }
-  .checkout-fields-flow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: calc(var(--spacing) * 3);
-    & .checkout-form-field, & .form-row {
-      margin-bottom: 0px;
+  .checkout-fields-flow .checkout-form-field, .checkout-fields-flow .form-row {
+    margin-bottom: 0px;
+    width: 100%;
+  }
+  @media (width >= 40rem) {
+    .checkout-fields-flow .checkout-form-field.form-row-first, .checkout-fields-flow .checkout-form-field.form-row-last {
+      width: calc(50% - 0.375rem);
+    }
+    .checkout-fields-flow .checkout-form-field.form-row-wide {
       width: 100%;
     }
-    @media (width >= 40rem) {
-      & .checkout-form-field.form-row-first, & .checkout-form-field.form-row-last {
-        width: calc(50% - 0.375rem);
-      }
-      & .checkout-form-field.form-row-wide {
-        width: 100%;
-      }
-      &.layout-international {
-        & #billing_city_field, & #shipping_city_field {
-          width: calc(40% - 0.5rem);
-        }
-        & #billing_state_field, & #shipping_state_field {
-          width: calc(30% - 0.5rem);
-        }
-        & #billing_postcode_field, & #shipping_postcode_field {
-          width: calc(30% - 0.5rem);
-        }
-      }
+    .checkout-fields-flow.layout-international #billing_city_field, .checkout-fields-flow.layout-international #shipping_city_field {
+      width: calc(40% - 0.5rem);
+    }
+    .checkout-fields-flow.layout-international #billing_state_field, .checkout-fields-flow.layout-international #shipping_state_field {
+      width: calc(30% - 0.5rem);
+    }
+    .checkout-fields-flow.layout-international #billing_postcode_field, .checkout-fields-flow.layout-international #shipping_postcode_field {
+      width: calc(30% - 0.5rem);
     }
   }
   .checkout-inline-error-message {

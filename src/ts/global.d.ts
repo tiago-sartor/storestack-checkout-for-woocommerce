@@ -14,10 +14,11 @@ interface JQueryInstance {
     [key: string]: unknown;
 }
 
-// wc_checkout_params — localised by WooCommerce classic checkout.
+// wc_checkout_params — localized by WooCommerce classic checkout.
 declare const wc_checkout_params: {
-    ajax_url: string;
+    wc_ajax_url: string;
     apply_coupon_nonce?: string;
+    remove_coupon_nonce?: string;
     [key: string]: string | undefined;
 };
 

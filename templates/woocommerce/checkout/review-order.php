@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Review order table
  *
@@ -36,8 +35,8 @@ defined('ABSPATH') || exit;
                 <li class="cart_item flex items-center py-3.5 text-sm gap-5">
 
                     <!-- Thumbnail with Quantity Badge -->
-                    <div class="relative size-16 lg:size-20 shrink-0 rounded-lg border border-neutral-200 bg-white p-0.5 flex items-center justify-center">
-                        <div class="size-full overflow-clip rounded-md flex items-center justify-center [&_img]:size-full [&_img]:object-cover">
+                    <div class="relative flex size-16 shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white p-0.5 shadow-xs lg:size-20">
+                        <div class="flex size-full items-center justify-center overflow-clip rounded-md [&_img]:size-full [&_img]:object-cover">
                             <?php echo wp_kses_post($product_thumbnail); ?>
                         </div>
                         <span class="absolute top-0 right-0 z-10 flex size-5.5 translate-x-11/25 -translate-y-11/25 items-center justify-center rounded-full bg-neutral-800 px-1 text-xs font-semibold text-white">
@@ -97,7 +96,7 @@ defined('ABSPATH') || exit;
                         value="" />
                 </div>
                 <button
-                    id="apply_coupon_btn"
+                    id="apply_coupon"
                     type="button"
                     class="h-11 shrink-0 cursor-pointer rounded-lg border border-neutral-200 bg-neutral-50 px-5 text-sm font-medium text-neutral-600 hover:text-neutral-800 hover:bg-neutral-200 active:bg-neutral-200"
                     name="apply_coupon"
@@ -110,7 +109,7 @@ defined('ABSPATH') || exit;
             <?php if ($coupons = WC()->cart->get_coupons()) : ?>
                 <div class="flex flex-wrap gap-2 mt-3">
                     <?php foreach ($coupons as $code => $coupon) : ?>
-                        <span class="relative inline-flex flex-nowrap items-center justify-center gap-1.5 rounded-md border-[1.5px] border-dashed border-neutral-400 bg-neutral-100 px-2 py-1 text-xs font-semibold tracking-wide uppercase">
+                        <span class="relative inline-flex flex-nowrap items-center justify-center gap-1.5 rounded-md border border-dashed border-neutral-400 bg-neutral-100 px-2 py-1 text-xs font-semibold tracking-wide uppercase">
                             <svg class="size-3.5 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
@@ -158,7 +157,7 @@ defined('ABSPATH') || exit;
         <?php if (WC()->cart->needs_shipping() && WC()->cart->show_shipping()) : ?>
             <?php do_action('woocommerce_review_order_before_shipping'); ?>
 
-            <div class="shipping-totals pt-1">
+            <div class="shipping-totals">
                 <?php wc_cart_totals_shipping_html(); ?>
             </div>
 
@@ -170,7 +169,7 @@ defined('ABSPATH') || exit;
     <?php do_action('woocommerce_review_order_before_order_total'); ?>
 
     <!-- Total Line -->
-    <div class="order-total flex items-baseline justify-between pt-4">
+    <div class="order-total flex items-baseline justify-between mt-2 pt-4 border-t border-neutral-100">
         <div class="flex flex-col">
             <span class="text-lg font-bold"><?php esc_html_e('Total', 'woocommerce'); ?></span>
         </div>

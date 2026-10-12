@@ -114,12 +114,12 @@
             @apply size-3.5! rounded-xs! border-neutral-500!;
 
             .wcbcf-value-toggle-mark {
-                @apply -top-0.75! -left-px!;
+                @apply top-[-2.25px]! -left-px! size-3.5!;
             }
         }
 
         .wcbcf-value-toggle-text {
-            @apply text-xs! tracking-tight! text-neutral-500! font-medium!;
+            @apply text-xs! tracking-tight! text-neutral-500! font-medium! hover:text-neutral-800!;
         }
     }
 
@@ -178,8 +178,7 @@
      * Supports Brazilian (Extra_Checkout_Fields_For_Brazil) & International layouts.
      * ────────────────────────────────────────────────────────────────────────── */
     .checkout-fields-flow {
-        @apply flex flex-wrap gap-3;
-
+        
         & .checkout-form-field,
         & .form-row {
             @apply w-full mb-0;

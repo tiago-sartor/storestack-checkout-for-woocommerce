@@ -29,60 +29,57 @@ uasort($fields, function ($a, $b) {
 
     <?php do_action('woocommerce_before_checkout_billing_form', $checkout); ?>
 
-    <div class="woocommerce-billing-fields__field-wrapper space-y-8">
-
-        <!-- Contact Information -->
-        <div class="contact-info-section">
-            <div class="flex items-baseline justify-between mb-4">
-                <h2 class="text-lg font-semibold tracking-tight">
-                    <?php esc_html_e('Contact Information', 'woocommerce'); ?>
-                </h2>
-
-                <?php wc_get_template('checkout/form-login-cta.php'); ?>
-            </div>
-
-            <div class="checkout-fields-flow flex flex-wrap gap-3">
-                <?php
-                $contact_field_keys = ['billing_email', 'billing_first_name', 'billing_last_name'];
-
-                foreach ($contact_field_keys as $key) {
-                    if (! isset($fields[$key])) {
-                        continue;
-                    }
-
-                    $field = $fields[$key];
-                    $field['placeholder'] = '';
-                    $field['label_class'] = [];
-                    $field['class'][] = 'checkout-form-field';
-
-                    woocommerce_form_field($key, $field, $checkout->get_value($key) ?? '');
-
-                    // Unset contact fields so they are not rendered again in the billing section below.
-                    unset($fields[$key]);
-                }
-                ?>
-            </div>
-
-        </div>
-
-        <!-- Billing / Address Information -->
-        <div class="billing-address-section">
-            <h2 class="text-lg font-semibold tracking-tight mb-4">
-                <?php esc_html_e('Billing address', 'woocommerce'); ?>
+    <!-- Contact Information -->
+    <div class="contact-info-section mb-8">
+        <div class="flex items-baseline justify-between mb-4">
+            <h2 class="text-lg font-semibold tracking-tight">
+                <?php esc_html_e('Contact Information', 'storestack-checkout-for-woocommerce'); ?>
             </h2>
 
-            <?php $layout_class = class_exists('Extra_Checkout_Fields_For_Brazil') ? 'layout-brazilian' : 'layout-international'; ?>
-            <div class="checkout-fields-flow flex flex-wrap gap-3 <?php echo esc_attr($layout_class); ?>">
-                <?php
-                foreach ($fields as $key => $field) {
-                    $field['placeholder'] = '';
-                    $field['label_class'] = [];
-                    $field['class'][] = 'checkout-form-field';
+            <?php wc_get_template('checkout/form-login-cta.php'); ?>
+        </div>
 
-                    woocommerce_form_field($key, $field, $checkout->get_value($key) ?? '');
+        <div class="checkout-fields-flow flex flex-wrap gap-3">
+            <?php
+            $contact_field_keys = ['billing_email', 'billing_first_name', 'billing_last_name'];
+
+            foreach ($contact_field_keys as $key) {
+                if (! isset($fields[$key])) {
+                    continue;
                 }
-                ?>
-            </div>
+
+                $field = $fields[$key];
+                $field['placeholder'] = '';
+                $field['label_class'] = [];
+                $field['class'][] = 'checkout-form-field';
+
+                woocommerce_form_field($key, $field, $checkout->get_value($key) ?? '');
+
+                // Unset contact fields so they are not rendered again in the billing section below.
+                unset($fields[$key]);
+            }
+            ?>
+        </div>
+    </div>
+
+    <!-- Billing / Address Information -->
+    <div class="woocommerce-billing-fields__field-wrapper">
+
+        <h2 class="text-lg font-semibold tracking-tight mb-4">
+            <?php esc_html_e('Billing address', 'woocommerce'); ?>
+        </h2>
+
+        <?php $layout_class = class_exists('Extra_Checkout_Fields_For_Brazil') ? 'layout-brazilian' : 'layout-international'; ?>
+        <div class="checkout-fields-flow flex flex-wrap gap-3 <?php echo esc_attr($layout_class); ?>">
+            <?php
+            foreach ($fields as $key => $field) {
+                $field['placeholder'] = '';
+                $field['label_class'] = [];
+                $field['class'][] = 'checkout-form-field';
+
+                woocommerce_form_field($key, $field, $checkout->get_value($key) ?? '');
+            }
+            ?>
         </div>
 
     </div>
