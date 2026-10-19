@@ -17,7 +17,7 @@
     "scripts": {
         "dev": "npm run dev:webpack && npm run dev:tailwind",
         "build": "npm run build:tailwind && npm run build:ts && npm run build:webpack",
-        "build:js": "esbuild src/ts/index.ts --bundle --minify --outfile=assets/js/checkout.js --target=es2022 && esbuild src/ts/brazilian-fields-validation.ts --bundle --minify --outfile=assets/js/brazilian-fields-validation.js --target=es2022",
+        "build:js": "esbuild src/ts/index.ts --bundle --minify --outfile=assets/js/checkout.js --target=es2022",
         "typecheck": "tsc --noEmit",
         "build:ts": "tsc -p tsconfig.json",
         "dev:tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/frontend.css --watch",

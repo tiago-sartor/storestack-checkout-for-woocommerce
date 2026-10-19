@@ -8,7 +8,7 @@
  */
 
 /**
- * Initialise the native <dialog> login modal.
+ * Initialize the native <dialog> login modal.
  * Handles open triggers, close button, backdrop click, and ESC key
  * (ESC is natively handled by <dialog>, so we don't need to re-implement it).
  */

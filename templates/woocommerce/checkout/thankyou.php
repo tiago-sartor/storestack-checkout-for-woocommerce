@@ -16,7 +16,7 @@ declare(strict_types=1);
 defined('ABSPATH') || exit;
 ?>
 
-<div class="woocommerce-order py-8 sm:py-12">
+<div class="woocommerce-order mx-auto max-w-6xl p-4 lg:p-10">
 
     <?php
     if ($order) :
@@ -58,23 +58,25 @@ defined('ABSPATH') || exit;
 
         <?php else : ?>
 
-            <div class="relative grid grid-cols-1 lg:grid-cols-12 lg:items-start lg:gap-10 xl:gap-14">
+            <div class="relative grid grid-cols-1 lg:grid-cols-5 lg:items-start lg:gap-10 xl:gap-14">
 
                 <!-- Left Column: Confirmation & Customer Details -->
-                <div class="lg:col-span-7 space-y-6">
+                <div class="lg:col-span-3 space-y-6">
 
                     <!-- Header with Checkmark -->
-                    <div class="flex items-start gap-4">
-                        <div class="size-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                    <div class="thankyou-header flex items-center gap-4">
+                        <div class="thankyou-header__checkmark flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-emerald-600 bg-emerald-50 text-emerald-600">
+                            <svg class="size-6.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
                         </div>
                         <div>
-                            <span class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+                            <span class="thankyou-header__order# text-xs font-semibold tracking-wider text-neutral-600 uppercase">
+                                <?php /* translators: %s: Order number. */ ?>
                                 <?php printf(esc_html__('Order #%s', 'woocommerce'), esc_html($order->get_order_number())); ?>
                             </span>
-                            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mt-0.5">
+                            <h1 class="thankyou-header__thankyou text-2xl sm:text-3xl font-bold tracking-tight mt-0.5">
+                                <?php /* translators: %s: Customer first name. */ ?>
                                 <?php printf(esc_html__('Thank you, %s!', 'woocommerce'), esc_html($order->get_billing_first_name())); ?>
                             </h1>
                         </div>
@@ -86,6 +88,7 @@ defined('ABSPATH') || exit;
                             <?php echo esc_html__('Your order is confirmed', 'woocommerce'); ?>
                         </h3>
                         <p class="text-xs text-neutral-600 leading-relaxed">
+                            <?php /* translators: %s: Customer email address. */ ?>
                             <?php printf(esc_html__('We\'ve accepted your order, and we\'ll send updates to %s.', 'woocommerce'), '<strong class="font-medium">' . esc_html($order->get_billing_email()) . '</strong>'); ?>
                         </p>
                     </div>
@@ -97,7 +100,70 @@ defined('ABSPATH') || exit;
                     do_action('woocommerce_thankyou', $order->get_id());
                     ?>
 
-                    <?php if ($order->get_user_id() === get_current_user_id()) : ?>
+                    <?php
+                    // We make sure the order belongs to the user. This will also be true if the user is a guest, and the order belongs to a guest (userID === 0).
+                    if ($order->get_user_id() === get_current_user_id()) :
+                    ?>
+                        <div class="space-y-4">
+                            <h3 class="text-base font-semibold">
+                                <?php echo esc_html__('Order details', 'woocommerce'); ?>
+                            </h3>
+                            <p class="text-sm">Verifique as informações abaixo com atenção. Se precisar corrigir algum dado, por favor comunique-nos o mais breve possível.</p>
+                            <div class="overflow-hidden rounded-lg border border-neutral-300">
+                                <table class="w-full table-auto text-sm">
+                                    <tbody class="divide-y divide-neutral-300">
+                                        <tr>
+                                            <th scope="row" class="w-px p-4 text-left align-top font-medium whitespace-nowrap"><?php esc_html_e('E-mail', 'storestack-checkout-for-woocommerce'); ?></th>
+                                            <td class="break-all p-4 align-top"><?php echo esc_html($order->get_billing_email()); ?></td>
+                                        </tr>
+                                        <?php
+                                        $billing_cellphone = $order->get_meta('_billing_cellphone', true);
+                                        if ($billing_cellphone) :
+                                        ?>
+                                            <tr>
+                                                <th scope="row" class="w-px p-4 text-left align-top font-medium whitespace-nowrap"><?php esc_html_e('Mobile Phone', 'storestack-checkout-for-woocommerce'); ?></th>
+                                                <td class="p-4 align-top"><?php echo esc_html($billing_cellphone); ?></td>
+                                            </tr>
+                                        <?php else : ?>
+                                            <tr>
+                                                <th scope="row" class="w-px p-4 text-left align-top font-medium whitespace-nowrap"><?php esc_html_e('Phone', 'storestack-checkout-for-woocommerce'); ?></th>
+                                                <td class="p-4 align-top"><?php echo esc_html($order->get_billing_phone()); ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <tr>
+                                            <th scope="row" class="w-px p-4 text-left align-top font-medium whitespace-nowrap"><?php esc_html_e('Shipping', 'storestack-checkout-for-woocommerce'); ?></th>
+                                            <td class="p-4 align-top">
+                                                <address class="not-italic!">
+                                                    <?php
+                                                    $show_shipping = !wc_ship_to_billing_address_only() && $order->needs_shipping_address();
+                                                    if ($show_shipping) :
+                                                        echo wp_kses_post($order->get_formatted_shipping_address(esc_html__('N/A', 'woocommerce')));
+                                                        do_action('woocommerce_order_details_after_customer_address', 'shipping', $order);
+                                                    else :
+                                                        echo wp_kses_post($order->get_formatted_billing_address(esc_html__('N/A', 'woocommerce')));
+                                                        do_action('woocommerce_order_details_after_customer_address', 'billing', $order);
+                                                    endif;
+                                                    ?>
+                                                </address>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $customer_note = $order->get_customer_note();
+                                        if ($customer_note) :
+                                        ?>
+                                            <tr>
+                                                <th scope="row" class="w-px p-4 text-left align-top font-medium whitespace-nowrap"><?php esc_html_e('Additional Info', 'storestack-checkout-for-woocommerce'); ?></th>
+                                                <td class="p-4 align-top"><?php echo wp_kses_post($customer_note); ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <tr>
+                                            <th scope="row" class="w-px p-4 text-left align-top font-medium whitespace-nowrap"><?php esc_html_e('Payment', 'storestack-checkout-for-woocommerce'); ?></th>
+                                            <td class="p-4 align-top"><?php echo wp_kses_post($order->get_payment_method_title()); ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <!-- Customer Information Card (Grid) -->
                         <div class="p-6 rounded-xl border border-neutral-200/90 bg-white shadow-2xs space-y-6">
                             <h3 class="text-base font-semibold">
@@ -111,7 +177,8 @@ defined('ABSPATH') || exit;
                                         <?php echo esc_html__('Contact information', 'woocommerce'); ?>
                                     </h4>
                                     <p class=""><?php echo esc_html($order->get_billing_email()); ?></p>
-                                    <?php if ($phone = $order->get_billing_phone()) : ?>
+                                    <?php $phone = $order->get_billing_phone(); ?>
+                                    <?php if ($phone) : ?>
                                         <p class="text-neutral-600 mt-0.5"><?php echo esc_html($phone); ?></p>
                                     <?php endif; ?>
                                 </div>
@@ -131,7 +198,7 @@ defined('ABSPATH') || exit;
                                     </h4>
                                     <address class="not-italic leading-relaxed">
                                         <?php
-                                        $show_shipping = !wc_ship_to_billing_address_only() && $order->needs_shipping_address();
+                                        $show_shipping = ! wc_ship_to_billing_address_only() && $order->needs_shipping_address();
                                         if ($show_shipping) :
                                             echo wp_kses_post($order->get_formatted_shipping_address(esc_html__('N/A', 'woocommerce')));
                                             do_action('woocommerce_order_details_after_customer_address', 'shipping', $order);
@@ -153,7 +220,8 @@ defined('ABSPATH') || exit;
                                     </address>
                                 </div>
 
-                                <?php if ($customer_note = $order->get_customer_note()) : ?>
+                                <?php $customer_note = $order->get_customer_note(); ?>
+                                <?php if ($customer_note) : ?>
                                     <div class="sm:col-span-2 pt-2 border-t border-neutral-100">
                                         <h4 class="font-medium text-neutral-500 mb-1 uppercase text-2xs tracking-wider">
                                             <?php echo esc_html__('Order notes', 'woocommerce'); ?>
@@ -190,9 +258,9 @@ defined('ABSPATH') || exit;
                 </div>
 
                 <!-- Right Column: Order Details / Items Summary -->
-                <div class="lg:col-span-5 mt-8 lg:mt-0">
+                <div class="lg:col-span-2 mt-8 lg:mt-0">
                     <div class="lg:sticky lg:top-8 bg-neutral-50 border border-neutral-200/90 rounded-2xl p-5 sm:p-7 shadow-xs">
-                        <?php wc_get_template('order/order-details.php', ['order' => $order]); ?>
+                        <?php wc_get_template('order/order-details.php', array('order' => $order)); ?>
                     </div>
                 </div>
 

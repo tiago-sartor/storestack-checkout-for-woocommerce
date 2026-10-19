@@ -1,10 +1,15 @@
 <?php
+/**
+ * Main custom checkout page template.
+ *
+ * @package StoreStackCheckoutForWooCommerce
+ */
 
 declare(strict_types=1);
 
 namespace StoreStackCheckoutForWooCommerce;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 
 $default_header_template = SSCFW_PLUGIN_PATH . 'templates/header.php';
@@ -18,17 +23,17 @@ $default_header_template = SSCFW_PLUGIN_PATH . 'templates/header.php';
  */
 $filtered_header_template = apply_filters( 'storestack_checkout_header_template', $default_header_template );
 
-include_once file_exists($filtered_header_template) ? $filtered_header_template : $default_header_template;
+require_once file_exists( $filtered_header_template ) ? $filtered_header_template : $default_header_template;
 ?>
 
 
 <main class="relative size-full">
-    <?php
-    while (have_posts()) {
-        the_post();
-        the_content();
-    }
-    ?>
+	<?php
+	while ( have_posts() ) {
+		the_post();
+		the_content();
+	}
+	?>
 </main>
 
 
@@ -44,4 +49,4 @@ $default_footer_template = SSCFW_PLUGIN_PATH . 'templates/footer.php';
  */
 $filtered_footer_template = apply_filters( 'storestack_checkout_footer_template', $default_footer_template );
 
-include_once file_exists($filtered_footer_template) ? $filtered_footer_template : $default_footer_template;
+require_once file_exists( $filtered_footer_template ) ? $filtered_footer_template : $default_footer_template;
