@@ -1,0 +1,41 @@
+[data-pagarme-element="fields-cc-data"] {
+    @apply flex flex-wrap divide-x divide-y divide-neutral-300 overflow-clip rounded-xl border border-neutral-300 bg-white;
+
+    .form-row {
+        @apply relative;
+
+        & label {
+            @apply pointer-events-none absolute top-1.25 left-3.5 z-10 block! text-[11px]! font-medium text-neutral-500 transition-all duration-200 ease-in-out select-none;
+        }
+
+        & input {
+            @apply h-12! w-full! bg-transparent px-3.5! pb-0! pt-4! text-sm! text-neutral-900 transition-all duration-200 ease-in-out focus:outline-none;
+        }
+    }
+
+    .form-row-wide {
+        @apply w-full;
+    }
+
+    .form-row-first,
+    .form-row-last {
+        @apply w-1/2;
+    }
+}
+
+.form-row:has(> select[id^="pagarme"]) {
+    @apply relative rounded-lg border border-neutral-300 bg-white mt-4;
+
+    &::after {
+        @apply pointer-events-none absolute top-0 right-2 h-full w-5.5 bg-neutral-600 mask-center mask-no-repeat content-[""];
+        mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOC4yNSAxNSAxMiAxOC43NSAxNS43NSAxNW0tNy41LTZMMTIgNS4yNSAxNS43NSA5IiAvPg0KPC9zdmc+DQo=);
+    }
+        
+    & label {
+        @apply pointer-events-none absolute top-1.25 left-3.5 z-10 block! text-[11px]! font-medium text-neutral-500 transition-all duration-200 ease-in-out select-none;
+    }     
+    
+    & select {
+        @apply h-12! w-full! cursor-pointer appearance-none bg-transparent px-3.5! pb-0! pt-4! text-sm! text-neutral-900 focus:outline-none;
+    }
+}

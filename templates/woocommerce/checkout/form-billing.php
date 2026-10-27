@@ -37,7 +37,7 @@ uasort(
 	<div class="contact-info-section mb-8">
 		<div class="flex items-baseline justify-between mb-4">
 			<h2 class="text-lg font-semibold tracking-tight">
-				<?php esc_html_e( 'Contact Information', 'storestack-checkout-for-woocommerce' ); ?>
+				<?php esc_html_e( 'Contact information', 'storestack-checkout-for-woocommerce' ); ?>
 			</h2>
 
 			<?php wc_get_template( 'checkout/form-login-cta.php' ); ?>

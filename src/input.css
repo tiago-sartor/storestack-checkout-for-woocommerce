@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
+@import "./integration-stone.css";
+
 @theme {
     --font-sans: "Inter", sans-serif;
 
@@ -261,7 +263,7 @@
     }
   
     .woocommerce-checkout .select2-selection__arrow {
-        @apply content-none! absolute! top-0! right-2! h-full! w-5.5! bg-neutral-600! mask-center! mask-no-repeat!;
+        @apply pointer-events-none! absolute! top-0! right-2! h-full! w-5.5! bg-neutral-600! mask-center! mask-no-repeat! content-[""]!;
         mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOC4yNSAxNSAxMiAxOC43NSAxNS43NSAxNW0tNy41LTZMMTIgNS4yNSAxNS43NSA5IiAvPg0KPC9zdmc+DQo=);
     }
 

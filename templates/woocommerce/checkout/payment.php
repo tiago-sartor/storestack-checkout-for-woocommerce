@@ -56,7 +56,7 @@ if ( ! wp_doing_ajax() ) {
 		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
 		<!-- Action Row (Return to Cart & Pay Now) -->
-		<div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 mt-8 pt-4 border-t border-neutral-200/60">
+		<div class="mt-8 flex flex-col-reverse items-center justify-between gap-4 border-t border-neutral-200/60 pt-4 sm:flex-row">
 			<a
 				class="mr-1.5 flex w-full items-center justify-center gap-1.5 py-2.5 text-center text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 sm:w-auto sm:justify-start sm:text-left"
 				href="<?php echo esc_url( wc_get_cart_url() ); ?>"
@@ -68,7 +68,7 @@ if ( ! wp_doing_ajax() ) {
 			</a>
 
 			<button
-				class="storestack-checkout-button-primary w-full sm:w-auto min-w-56 px-8 py-4 text-base font-semibold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+				class="storestack-checkout-button-primary flex w-full min-w-56 cursor-pointer items-center justify-center gap-2 px-8 py-4 text-base font-semibold shadow-sm transition-all sm:w-auto"
 				type="submit"
 				name="woocommerce_checkout_place_order"
 				id="place_order"

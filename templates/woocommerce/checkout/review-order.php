@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
 				$product_attributes = $cart_item['variation'] ?? array();
 				$product_subtotal   = apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
 				?>
-				<li class="cart_item flex items-center py-3.5 text-sm gap-5">
+				<li class="cart_item flex py-3.5 text-sm gap-6">
 
 					<!-- Thumbnail with Quantity Badge -->
 					<div class="relative flex size-16 shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white p-0.5 shadow-xs lg:size-20">
@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 
 					<!-- Details & Price -->
-					<div class="flex flex-1 items-start justify-between gap-4">
+					<div class="flex flex-1 flex-nowrap items-start justify-between gap-4">
 						<div class="flex flex-col">
 							<h4 class="font-medium truncate">
 								<?php echo wp_kses_post( $product_name ); ?>
